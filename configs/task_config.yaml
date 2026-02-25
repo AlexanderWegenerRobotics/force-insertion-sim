@@ -1,0 +1,6 @@
+T_task: 20.0
+
+devices:
+  arm:
+    max_linear_vel: 0.05
+    max_angular_vel: 0.3

@@ -1,0 +1,83 @@
+world_model: assets/mujoco/scenes/world_scene.xml
+control_rate: 200
+render_fps: 30
+
+render_cameras:
+  - name: workspace_overview_1
+    attachment: False
+    enabled: True
+    width: 1280
+    height: 960
+
+  - name: workspace_overview_2
+    attachment: False
+    enabled: True
+    width: 1280
+    height: 960
+
+display:
+  enabled: True
+  # Options: horizontal, vertical, grid
+  layout: grid
+  grid_cols: 2
+  window_name: "Robot Camera Views"
+
+# Logging configuration
+logging:
+  enabled: True
+  frequency: 200
+
+video_logging:
+  enabled: True
+  frequency: 20
+  cameras:
+    - workspace_overview_1
+    - workspace_overview_2
+
+streaming:
+  enabled: False
+
+# Add and configure devices such as robots
+devices:
+  - name: arm
+    type: robot
+    enabled: True
+    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/franka_fr3/fr3_torque_peg.xml
+    urdf_path: assets/urdf/franka_fr3/panda.urdf
+    urdf_ee_name: fr3_link8
+    ctrl_param: configs/control/panda_arm.yaml
+    dof: 7
+    base_pose:
+      position: [0, 0, 0.425]
+      orientation: [1, 0, 0, 0]
+    q0: [0.0, -0.785398, 0.0, -2.356194, 0.0, 1.570796, 0.785398]
+
+# Add and configure objects such as table, box etc
+objects:
+  - name: table
+    type: static
+    model_path: assets/mujoco/props/table.xml
+    pose:
+      position: [0, 0, 0]
+      orientation: [1, 0, 0, 0]
+
+  - name: hole
+    type: static
+    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/hole.xml
+    pose:
+      position: [0.5, 0, 0.455]
+      orientation: [1, 0, 0, 0]
+
+# Add and configure cameras such as overall viewpoint
+cameras:
+  - name: workspace_overview_1
+    type: fixed
+    pos: [0.4, 0.7, 0.8]
+    look_at: [0.4, 0.0, 0.8]
+    fovy: 90
+
+  - name: workspace_overview_2
+    type: fixed
+    pos: [0.8, 0.0, 0.8]
+    look_at: [0.2, 0.0, 0.6]
+    fovy: 90

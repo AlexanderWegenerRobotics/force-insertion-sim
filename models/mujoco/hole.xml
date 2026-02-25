@@ -1,0 +1,31 @@
+<mujoco model="hole_fixture">
+
+  <worldbody>
+    <body name="fixture">
+
+      <!-- Main block — the fixture body -->
+      <geom type="box" size="0.08 0.08 0.03"
+            rgba="0.4 0.4 0.8 0.9"
+            mass="1.0"
+            friction="1.0 0.005 0.0001"/>
+
+      <!-- Visual-only cylinder to show the hole opening
+           contype=0 conaffinity=0 means no collision -->
+      <geom type="cylinder" size="0.017 0.031"
+            rgba="0.1 0.1 0.1 1"
+            contype="0" conaffinity="0"
+            mass="0"/>
+
+      <!-- Hole entrance site — used for state machine 
+           and perturbation reference -->
+      <site name="hole_entrance" pos="0 0 0.03"
+            size="0.002" rgba="0 1 0 1"/>
+
+      <!-- Hole bottom site — insertion success reference -->
+      <site name="hole_bottom" pos="0 0 -0.02"
+            size="0.002" rgba="0 0 1 1"/>
+
+    </body>
+  </worldbody>
+
+</mujoco>
