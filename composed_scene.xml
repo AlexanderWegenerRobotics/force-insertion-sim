@@ -1,0 +1,219 @@
+<mujoco model="panda scene">
+  <compiler angle="radian"/>
+
+  <option timestep="0.005" integrator="implicitfast" iterations="5" ls_iterations="8">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <size nkey="1"/>
+
+  <visual>
+    <global azimuth="120" elevation="-20" offwidth="1280" offheight="960"/>
+    <headlight ambient="0.3 0.3 0.3" diffuse="0.6 0.6 0.6" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+  </visual>
+
+  <statistic extent="1" center="0.3 0 0.4"/>
+
+  <default>
+    <default class="arm/main">
+      <default class="arm/fr3">
+        <joint armature="0.195" damping="0.21" frictionloss="1.137"/>
+        <site size="0.001 0.005 0.005" group="4" rgba="0.5 0.5 0.5 0.3"/>
+        <default class="arm/visual">
+          <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+        </default>
+        <default class="arm/collision">
+          <geom type="mesh" group="3"/>
+        </default>
+      </default>
+    </default>
+    <default class="table/main">
+      <default class="table/table">
+        <geom condim="6" material="table_mat"/>
+      </default>
+    </default>
+    <default class="hole/main"/>
+  </default>
+
+  <custom>
+    <numeric name="max_contact_points" size="1" data="12"/>
+  </custom>
+
+  <asset>
+    <texture type="skybox" colorspace="auto" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" colorspace="auto" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+    <material name="arm/black" rgba="0.2 0.2 0.2 1"/>
+    <material name="arm/white"/>
+    <material name="arm/red" rgba="1 0.072272 0.039546 1"/>
+    <material name="arm/gray" rgba="0.863156 0.863156 0.863157 1"/>
+    <material name="arm/button_green" rgba="0.102241 0.571125 0.102242 1"/>
+    <material name="arm/button_red" rgba="0.520996 0.008023 0.013702 1"/>
+    <material name="arm/button_blue" rgba="0.024157 0.445201 0.737911 1"/>
+    <material name="table/table_mat" specular="0.3" shininess="0.1" rgba="0.82 0.71 0.55 1"/>
+    <mesh name="arm/link0_0" content_type="model/obj" file="link0_0.obj"/>
+    <mesh name="arm/link0_1" content_type="model/obj" file="link0_1.obj"/>
+    <mesh name="arm/link0_2" content_type="model/obj" file="link0_2.obj"/>
+    <mesh name="arm/link0_3" content_type="model/obj" file="link0_3.obj"/>
+    <mesh name="arm/link0_4" content_type="model/obj" file="link0_4.obj"/>
+    <mesh name="arm/link0_5" content_type="model/obj" file="link0_5.obj"/>
+    <mesh name="arm/link0_6" content_type="model/obj" file="link0_6.obj"/>
+    <mesh name="arm/link1" content_type="model/obj" file="link1.obj"/>
+    <mesh name="arm/link2" content_type="model/obj" file="link2.obj"/>
+    <mesh name="arm/link3_0" content_type="model/obj" file="link3_0.obj"/>
+    <mesh name="arm/link3_1" content_type="model/obj" file="link3_1.obj"/>
+    <mesh name="arm/link4_0" content_type="model/obj" file="link4_0.obj"/>
+    <mesh name="arm/link4_1" content_type="model/obj" file="link4_1.obj"/>
+    <mesh name="arm/link5_0" content_type="model/obj" file="link5_0.obj"/>
+    <mesh name="arm/link5_1" content_type="model/obj" file="link5_1.obj"/>
+    <mesh name="arm/link5_2" content_type="model/obj" file="link5_2.obj"/>
+    <mesh name="arm/link6_0" content_type="model/obj" file="link6_0.obj"/>
+    <mesh name="arm/link6_1" content_type="model/obj" file="link6_1.obj"/>
+    <mesh name="arm/link6_2" content_type="model/obj" file="link6_2.obj"/>
+    <mesh name="arm/link6_3" content_type="model/obj" file="link6_3.obj"/>
+    <mesh name="arm/link6_4" content_type="model/obj" file="link6_4.obj"/>
+    <mesh name="arm/link6_5" content_type="model/obj" file="link6_5.obj"/>
+    <mesh name="arm/link6_6" content_type="model/obj" file="link6_6.obj"/>
+    <mesh name="arm/link6_7" content_type="model/obj" file="link6_7.obj"/>
+    <mesh name="arm/link7_0" content_type="model/obj" file="link7_0.obj"/>
+    <mesh name="arm/link7_1" content_type="model/obj" file="link7_1.obj"/>
+    <mesh name="arm/link7_2" content_type="model/obj" file="link7_2.obj"/>
+    <mesh name="arm/link7_3" content_type="model/obj" file="link7_3.obj"/>
+    <mesh name="arm/link0_coll" content_type="model/stl" file="link0.stl"/>
+    <mesh name="arm/link1_coll" content_type="model/stl" file="link1.stl"/>
+    <mesh name="arm/link2_coll" content_type="model/stl" file="link2.stl"/>
+    <mesh name="arm/link3_coll" content_type="model/stl" file="link3.stl"/>
+    <mesh name="arm/link4_coll" content_type="model/stl" file="link4.stl"/>
+    <mesh name="arm/link5_coll" content_type="model/stl" file="link5.stl"/>
+    <mesh name="arm/link6_coll" content_type="model/stl" file="link6.stl"/>
+    <mesh name="arm/link7_coll" content_type="model/stl" file="link7.stl"/>
+  </asset>
+
+  <worldbody>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+    <geom size="0.01 0.15" pos="0.15 0 0" quat="0.707107 0 -0.707107 0" type="capsule" rgba="1 0 0 1"/>
+    <geom size="0.01 0.15" pos="0 0.15 0" quat="0.707107 0.707107 0 0" type="capsule" rgba="0 1 0 1"/>
+    <geom size="0.01 0.15" pos="0 0 0.15" quat="0 1 0 0" type="capsule" rgba="0 0 1 1"/>
+    <site name="target_sphere" pos="0 0 0.5" size="0.03" rgba="1 0 0 0.5"/>
+    <camera name="workspace_overview_1" pos="0.4 0.7 0.6" quat="0 0 0.798349 0.602196" fovy="90"/>
+    <camera name="workspace_overview_2" pos="0.8 0 0.8" quat="0.573635 0.413453 0.413453 0.573635" fovy="90"/>
+    <light pos="0 0 1.5" dir="0 0 -1" type="directional"/>
+    <body name="arm/base" childclass="arm/fr3" pos="0 0 0.425">
+      <body name="arm/fr3_link0">
+        <geom class="arm/visual" material="arm/black" mesh="arm/link0_0"/>
+        <geom class="arm/visual" material="arm/white" mesh="arm/link0_1"/>
+        <geom class="arm/visual" material="arm/white" mesh="arm/link0_2"/>
+        <geom class="arm/visual" material="arm/white" mesh="arm/link0_3"/>
+        <geom class="arm/visual" material="arm/white" mesh="arm/link0_4"/>
+        <geom class="arm/visual" material="arm/red" mesh="arm/link0_5"/>
+        <geom class="arm/visual" material="arm/black" mesh="arm/link0_6"/>
+        <geom name="arm/fr3_link0_collision" class="arm/collision" mesh="arm/link0_coll"/>
+        <body name="arm/fr3_link1" pos="0 0 0.333">
+          <inertial pos="4.128e-07 -0.0181251 -0.0386036" quat="0.998098 -0.0605364 0.00380499 0.0110109" mass="2.92747" diaginertia="0.0239286 0.0227246 0.00610634"/>
+          <joint name="arm/fr3_joint1" pos="0 0 0" axis="0 0 1" range="-2.7437 2.7437" actuatorfrcrange="-87 87"/>
+          <geom name="arm/fr3_link1_collision" class="arm/collision" mesh="arm/link1_coll"/>
+          <geom class="arm/visual" material="arm/white" mesh="arm/link1"/>
+          <body name="arm/fr3_link2" quat="0.707107 -0.707107 0 0">
+            <inertial pos="0.00318289 -0.0743222 0.00881461" quat="0.502599 0.584437 -0.465998 0.434366" mass="2.93554" diaginertia="0.0629567 0.0411924 0.0246371"/>
+            <joint name="arm/fr3_joint2" pos="0 0 0" axis="0 0 1" range="-1.7837 1.7837" actuatorfrcrange="-87 87"/>
+            <geom class="arm/visual" material="arm/white" mesh="arm/link2"/>
+            <geom name="arm/fr3_link2_collision" class="arm/collision" mesh="arm/link2_coll"/>
+            <body name="arm/fr3_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
+              <inertial pos="0.0407016 -0.00482006 -0.0289731" quat="0.921025 -0.244161 0.155272 0.260745" mass="2.2449" diaginertia="0.0267409 0.0189869 0.0171587"/>
+              <joint name="arm/fr3_joint3" pos="0 0 0" axis="0 0 1" range="-2.9007 2.9007" actuatorfrcrange="-87 87"/>
+              <geom class="arm/visual" material="arm/white" mesh="arm/link3_0"/>
+              <geom class="arm/visual" material="arm/black" mesh="arm/link3_1"/>
+              <geom name="arm/fr3_link3_collision" class="arm/collision" mesh="arm/link3_coll"/>
+              <body name="arm/fr3_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
+                <inertial pos="-0.0459101 0.0630493 -0.00851879" quat="0.438018 0.803311 0.00937812 0.403414" mass="2.6156" diaginertia="0.05139 0.0372717 0.0160047"/>
+                <joint name="arm/fr3_joint4" pos="0 0 0" axis="0 0 1" range="-3.0421 -0.1518" actuatorfrcrange="-87 87"/>
+                <geom class="arm/visual" material="arm/white" mesh="arm/link4_0"/>
+                <geom class="arm/visual" material="arm/black" mesh="arm/link4_1"/>
+                <geom name="arm/fr3_link4_collision" class="arm/collision" mesh="arm/link4_coll"/>
+                <body name="arm/fr3_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
+                  <inertial pos="-0.00160396 0.0292536 -0.0972966" quat="0.919031 0.125604 0.0751531 -0.366003" mass="2.32712" diaginertia="0.0579335 0.0449144 0.0130634"/>
+                  <joint name="arm/fr3_joint5" pos="0 0 0" axis="0 0 1" range="-2.8065 2.8065" actuatorfrcrange="-12 12" armature="0.074" frictionloss="0.763"/>
+                  <geom class="arm/visual" material="arm/white" mesh="arm/link5_0"/>
+                  <geom class="arm/visual" material="arm/white" mesh="arm/link5_1"/>
+                  <geom class="arm/visual" material="arm/black" mesh="arm/link5_2"/>
+                  <geom name="arm/fr3_link5_collision" class="arm/collision" mesh="arm/link5_coll"/>
+                  <body name="arm/fr3_link6" quat="0.707107 0.707107 0 0">
+                    <inertial pos="0.0597131 -0.0410295 -0.0101693" quat="0.621301 0.552665 0.510011 0.220081" mass="1.81704" diaginertia="0.0175039 0.0161123 0.00193529"/>
+                    <joint name="arm/fr3_joint6" pos="0 0 0" axis="0 0 1" range="0.5445 4.5169" actuatorfrcrange="-12 12" armature="0.074" frictionloss="0.44"/>
+                    <geom class="arm/visual" material="arm/button_green" mesh="arm/link6_0"/>
+                    <geom class="arm/visual" material="arm/white" mesh="arm/link6_1"/>
+                    <geom class="arm/visual" material="arm/white" mesh="arm/link6_2"/>
+                    <geom class="arm/visual" material="arm/gray" mesh="arm/link6_3"/>
+                    <geom class="arm/visual" material="arm/button_red" mesh="arm/link6_4"/>
+                    <geom class="arm/visual" material="arm/white" mesh="arm/link6_5"/>
+                    <geom class="arm/visual" material="arm/black" mesh="arm/link6_6"/>
+                    <geom class="arm/visual" material="arm/button_blue" mesh="arm/link6_7"/>
+                    <geom name="arm/fr3_link6_collision" class="arm/collision" mesh="arm/link6_coll"/>
+                    <body name="arm/fr3_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
+                      <inertial pos="0.00452258 0.00862619 -0.0161633" quat="0.727579 0.0978688 -0.24906 0.63168" mass="0.627143" diaginertia="0.000223836 0.000223642 5.64132e-07"/>
+                      <joint name="arm/fr3_joint7" pos="0 0 0" axis="0 0 1" range="-3.0159 3.0159" actuatorfrcrange="-12 12" armature="0.074" frictionloss="0.248"/>
+                      <geom class="arm/visual" material="arm/black" mesh="arm/link7_0"/>
+                      <geom class="arm/visual" material="arm/white" mesh="arm/link7_1"/>
+                      <geom class="arm/visual" material="arm/white" mesh="arm/link7_2"/>
+                      <geom class="arm/visual" material="arm/black" mesh="arm/link7_3"/>
+                      <geom name="arm/fr3_link7_collision" class="arm/collision" mesh="arm/link7_coll"/>
+                      <site name="arm/attachment_site" pos="0 0 0.107"/>
+                      <body name="arm/fr3_link8" pos="0 0 0.107">
+                        <geom size="0.04 0.005" type="cylinder" contype="0" conaffinity="0" mass="0.1" rgba="0.3 0.3 0.3 1"/>
+                        <site name="arm/ft_sensor" pos="0 0 0"/>
+                        <body name="arm/peg">
+                          <geom size="0.015 0.04" pos="0 0 0.04" type="cylinder" condim="4" friction="0.5" mass="0.05" rgba="0.8 0.2 0.2 1"/>
+                          <site name="arm/peg_tip" pos="0 0 0.08" size="0.002" rgba="1 0 0 1"/>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="table/table">
+      <geom name="table/table_surface" class="table/table" size="0.6 0.5 0.025" pos="0 0 0.4" type="box" friction="1.2" solref="0.001" solimp="0.99 0.99" material="table/table_mat"/>
+      <geom name="table/leg_front_right" class="table/table" size="0.03 0.1875" pos="0.52 0.42 0.1875" type="cylinder" friction="0.9" material="table/table_mat"/>
+      <geom name="table/leg_front_left" class="table/table" size="0.03 0.1875" pos="-0.52 0.42 0.1875" type="cylinder" friction="0.9" material="table/table_mat"/>
+      <geom name="table/leg_back_right" class="table/table" size="0.03 0.1875" pos="0.52 -0.42 0.1875" type="cylinder" friction="0.9" material="table/table_mat"/>
+      <geom name="table/leg_back_left" class="table/table" size="0.03 0.1875" pos="-0.52 -0.42 0.1875" type="cylinder" friction="0.9" material="table/table_mat"/>
+    </body>
+    <body name="hole/fixture" pos="0.5 0 0.425">
+      <geom size="0.08 0.08 0.03" pos="0 0 0.03" type="box" contype="0" conaffinity="0" mass="1" rgba="0.4 0.4 0.8 0.9"/>
+      <geom size="0.017 0.031" pos="0 0 0.03" type="cylinder" contype="0" conaffinity="0" mass="0" rgba="0.1 0.1 0.1 0.1"/>
+      <site name="hole/hole_entrance" pos="0 0 0.06" size="0.002" rgba="0 1 0 1"/>
+      <site name="hole/hole_bottom" pos="0 0 0.01" size="0.002" rgba="0 0 1 1"/>
+    </body>
+  </worldbody>
+
+  <contact>
+    <exclude body1="arm/fr3_link0" body2="arm/fr3_link1"/>
+  </contact>
+
+  <actuator>
+    <general name="arm/tau1" joint="arm/fr3_joint1" ctrlrange="-87 87" forcerange="-87 87"/>
+    <general name="arm/tau2" joint="arm/fr3_joint2" ctrlrange="-87 87" forcerange="-87 87"/>
+    <general name="arm/tau3" joint="arm/fr3_joint3" ctrlrange="-87 87" forcerange="-87 87"/>
+    <general name="arm/tau4" joint="arm/fr3_joint4" ctrlrange="-87 87" forcerange="-87 87"/>
+    <general name="arm/tau5" joint="arm/fr3_joint5" ctrlrange="-12 12" forcerange="-12 12"/>
+    <general name="arm/tau6" joint="arm/fr3_joint6" ctrlrange="-12 12" forcerange="-12 12"/>
+    <general name="arm/tau7" joint="arm/fr3_joint7" ctrlrange="-12 12" forcerange="-12 12"/>
+  </actuator>
+
+  <sensor>
+    <force site="arm/ft_sensor" name="arm/ft_force"/>
+    <torque site="arm/ft_sensor" name="arm/ft_torque"/>
+    <framelinvel objtype="site" objname="arm/ft_sensor" name="arm/ee_linvel"/>
+    <frameangvel objtype="site" objname="arm/ft_sensor" name="arm/ee_angvel"/>
+    <framepos objtype="site" objname="arm/peg_tip" name="arm/peg_tip_pos"/>
+  </sensor>
+
+  <keyframe>
+    <key name="arm/home" qpos="0 0 0 -1.57079 0 1.57079 -0.7853" ctrl="0 0 0 -1.57079 0 1.57079 -0.7853"/>
+  </keyframe>
+</mujoco>

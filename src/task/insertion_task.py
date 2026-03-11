@@ -1,4 +1,5 @@
 import time
+import numpy as np
 from simcore import load_yaml, Pose
 
 #from collection.observation import ObservationBuilder
@@ -39,6 +40,10 @@ class InsertionTask:
                 "fail_phase": self.episode.phase.name if self.episode.phase == Phase.FAILED else None,
             }
             self._log_episode_result(result)
+
+    def _log_episode_result(self, result: dict) -> None:
+        status = "SUCCESS" if result["success"] else f"FAILED ({result['fail_phase']})"
+        print(f"Episode {result['episode']:03d} | {status} | duration: {result['duration']:.2f}s | hole_pos: {np.round(result['hole_pos'], 3)}")
 
 
 

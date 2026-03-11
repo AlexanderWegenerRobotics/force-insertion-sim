@@ -35,6 +35,7 @@ class TrajectoryPlanner:
 
         tau = self._t / self._T
         s, ds_norm, dds_norm = self._minjerk(tau)
+        s = np.clip(0.0, 1.0, s)
 
         ds = ds_norm / self._T
         dds = dds_norm / self._T ** 2

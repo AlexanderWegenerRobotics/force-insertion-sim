@@ -24,6 +24,11 @@ class InsertionEpisode:
         self.trajectory = TrajectoryPlanner()
 
         self.q_init = np.array([0.0, -0.785398, 0.0, -2.356194, 0.0, 1.570796, 0.785398])
+        self.peg_offset = config.get("peg_ee_offset")
+
+        hole_cfg = self.config.get('hole_pose')
+        self.hole_nom_pose = Pose(position=hole_cfg.get("pos"), quaternion=hole_cfg.get("quat"))
+        self.hole_nom_pose.position[2] += hole_cfg.get("height")
 
     
     def reset(self, hole_pos: np.ndarray, hole_quat: np.ndarray) -> None:
@@ -43,11 +48,16 @@ class InsertionEpisode:
             
             if self.phase == Phase.FAILED or self.phase == Phase.DONE:
                 self.running = False
+            elif self.phase == Phase.SEARCH:
+                self.phase = Phase.DONE
+                self.running = False
 
     def system_ready(self):
         while not self.system.sim.running:
             time.sleep(0.1)
         return True
+
+    from scipy.spatial.transform import Rotation
 
     def run_approach(self) -> bool:
         cfg_app = self.config.get("episode", {}).get("approach")
@@ -56,28 +66,40 @@ class InsertionEpisode:
         current_pose = self.system.ctrl[self.device_name].get_ee_pose_world(state[self.device_name])
         p0, q0 = current_pose.position, current_pose.quaternion
 
-        hole_cfg = self.config.get('hole_pose')
-        nom_pose = Pose(position=hole_cfg.get("pos"), quaternion=cfg_app.get("quat"))
-        nom_pose.position[2] += cfg_app.get("pos_threshold")
+        # Approach quat is relative to hole frame, compose with hole orientation
+        hole_quat = self.hole_nom_pose.quaternion  # wxyz
+        approach_quat = np.array(cfg_app.get("quat", [0, 1, 0, 0]))  # wxyz
+
+        # Convert to scipy (xyzw), compose, convert back
+        R_hole = Rotation.from_quat([hole_quat[1], hole_quat[2], hole_quat[3], hole_quat[0]])
+        R_approach = Rotation.from_quat([approach_quat[1], approach_quat[2], approach_quat[3], approach_quat[0]])
+        R_final = R_hole * R_approach
+        q_xyzw = R_final.as_quat()
+        q2_nominal = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])  # back to wxyz
+
+        nom_pose = Pose(
+            position=self.hole_nom_pose.position.copy(),
+            quaternion=q2_nominal
+        )
+        nom_pose.position[2] += cfg_app.get("pos_threshold") + self.peg_offset
+
         pert = cfg_app.get("pertubation")
         p2, q2 = self._sample_pose(nom_pose=nom_pose, xy_std=pert["xy_std"], z_std=pert["z_std"], angle_std=pert["angle_std_deg"])
 
-        # Waypoint directly above p2 at a safe height
         hover_height = cfg_app.get("hover_height", 0.15)
         p_hover = np.array([p2[0], p2[1], p2[2] + hover_height])
 
-        # Segment 1: current pose -> hover above target (in one diagonal move)
-        self._execute_segment(p0, q0, p_hover, q2, max_speed=0.2)
-        # Segment 2: dive straight down to pre-insertion pose
-        self._execute_segment(p_hover, q2, p2, q2, max_speed=0.05)
+        self._execute_segment(p0, q0, p_hover, q2, max_speed=cfg_app.get("speed_transit", 0.2))
+        self._execute_segment(p_hover, q2, p2, q2, max_speed=cfg_app.get("speed_descent", 0.05))
 
         sensors = self.system.sim.get_sensor_data()
         tip = sensors[f'{self.prefix}peg_tip_pos'].copy()
+        tip[2] += self.peg_offset
         err = np.linalg.norm(tip - p2)
-        return err < 0.005
+        return err < cfg_app.get("success_threshold")
 
 
-    def _execute_segment(self,p_start, q_start, p_end, q_end, max_speed) -> None:
+    def _execute_segment(self, p_start, q_start, p_end, q_end, max_speed) -> None:
         dt = 0.005
         self.trajectory.plan_with_speed(p_start, q_start, p_end, q_end, max_speed=max_speed)
 
