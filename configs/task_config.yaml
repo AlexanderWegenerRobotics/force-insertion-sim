@@ -1,6 +1,30 @@
 T_task: 20.0
 
+N_task: 1
+
+hole_pose:
+  pos: [0.5, 0, 0.455]
+  quat: [1.0, 0.0, 0.0, 0.0]
+  pertubation:
+    xy_std: 0.00
+    z_std: 0.00
+    angle_std_deg: 0.0
+
+    #xy_std: 0.005
+    #z_std: 0.001
+    #angle_std_deg: 1.0
+
 devices:
   arm:
     max_linear_vel: 0.05
     max_angular_vel: 0.3
+
+episode:
+  approach:
+    quat:  [0, 1, 0, 0]
+    pos_threshold: 0.005
+    hover_height: 0.2
+    pertubation:
+      xy_std: 0.00
+      z_std: 0.00
+      angle_std_deg: 0.0
