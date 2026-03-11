@@ -2,9 +2,7 @@ import time
 import numpy as np
 from simcore import load_yaml, Pose
 
-#from collection.observation import ObservationBuilder
 from task.insertion_episode import InsertionEpisode, Phase
-#from collection.collector import DataCollector
 
 class InsertionTask:
     def __init__(self, system=None, config=None):
