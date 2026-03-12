@@ -1,0 +1,52 @@
+<mujoco model="hole_hex_s_tight">
+  <asset>
+    <mesh name="hole_hex_s_tight_visual" file="meshes/hole_hex_s_tight.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_s_tight_col_0" file="meshes/hole_hex_s_tight_col_0.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_s_tight_col_1" file="meshes/hole_hex_s_tight_col_1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_s_tight_col_2" file="meshes/hole_hex_s_tight_col_2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_s_tight_col_3" file="meshes/hole_hex_s_tight_col_3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_s_tight_col_4" file="meshes/hole_hex_s_tight_col_4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_s_tight_col_5" file="meshes/hole_hex_s_tight_col_5.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+    <body name="fixture" pos="0 0 0">
+      <geom name="hole_hex_s_tight_visual" type="mesh" mesh="hole_hex_s_tight_visual"
+            contype="0" conaffinity="0"
+            rgba="0.4 0.4 0.8 1.0"/>
+      <geom name="hole_hex_s_tight_col_0" type="mesh" mesh="hole_hex_s_tight_col_0"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="1.0 0.005 0.0001"
+            solref="0.08 1"
+            solimp="0.8 0.9 0.001"/>
+      <geom name="hole_hex_s_tight_col_1" type="mesh" mesh="hole_hex_s_tight_col_1"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="1.0 0.005 0.0001"
+            solref="0.08 1"
+            solimp="0.8 0.9 0.001"/>
+      <geom name="hole_hex_s_tight_col_2" type="mesh" mesh="hole_hex_s_tight_col_2"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="1.0 0.005 0.0001"
+            solref="0.08 1"
+            solimp="0.8 0.9 0.001"/>
+      <geom name="hole_hex_s_tight_col_3" type="mesh" mesh="hole_hex_s_tight_col_3"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="1.0 0.005 0.0001"
+            solref="0.08 1"
+            solimp="0.8 0.9 0.001"/>
+      <geom name="hole_hex_s_tight_col_4" type="mesh" mesh="hole_hex_s_tight_col_4"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="1.0 0.005 0.0001"
+            solref="0.08 1"
+            solimp="0.8 0.9 0.001"/>
+      <geom name="hole_hex_s_tight_col_5" type="mesh" mesh="hole_hex_s_tight_col_5"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="1.0 0.005 0.0001"
+            solref="0.08 1"
+            solimp="0.8 0.9 0.001"/>
+
+      <site name="hole_entrance" pos="0 0 0.1" size="0.002" rgba="0 1 0 1"/>
+      <site name="hole_bottom"   pos="0 0 0.0" size="0.002" rgba="0 0 1 1"/>
+    </body>
+  </worldbody>
+</mujoco>
