@@ -19,7 +19,7 @@ hole_pose:
 devices:
   arm:
     max_linear_vel: 0.05
-    max_angular_vel: 0.3
+    max_angular_vel: 0.2
 
 episode:
   approach:
@@ -42,9 +42,9 @@ episode:
 
   search:
     hole_detection_threshold: 0.001
-    timeout: 20
+    timeout: 40
     wiggle:
-      a: [4.0, 4.0, 4.931, 0.766, 0.906, 3.228]
+      a: [8.0, 8.0, 4.931, 0.766, 0.906, 3.228]
       f:   [2.179, 1.561, 0.0,   0.718, 0.720, 0.143]
       phi: [-0.078, 0.776, 0.0, -1.562, 0.610, -0.119]
       az:  4.931

@@ -45,12 +45,18 @@ class InsertionEpisode:
             match self.phase:
                 case Phase.IDLE:
                     self.phase = self.system_ready()
+                    print(f"Phase: {self.phase.name}")
                 case Phase.APPROACH:
                     self.phase = self.run_approach()
+                    print(f"Phase: {self.phase.name}")
                 case Phase.CONTACT:
                     self.phase = self.make_contact()
+                    print(f"Phase: {self.phase.name}")
                 case Phase.SEARCH:
                     self.phase = self.run_search()
+                    print(f"Phase: {self.phase.name}")
+                case Phase.INSERT:
+                    print(f"Phase: {self.phase.name}")
             
             if self.phase == Phase.FAILED or self.phase == Phase.DONE:
                 self.running = False
@@ -185,8 +191,9 @@ class InsertionEpisode:
 
         sensors = self.system.sim.get_sensor_data()
         tip = sensors[f'{self.prefix}peg_tip_pos'].copy()
-        tip[2] += self.peg_offset
+        #tip[2] += self.peg_offset
         err = np.linalg.norm(tip - p2)
+        print(err)
         return Phase.CONTACT if err < cfg_app.get("success_threshold") else Phase.FAILED
 
 
