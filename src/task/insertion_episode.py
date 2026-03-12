@@ -9,6 +9,7 @@ from task.trajectory import TrajectoryPlanner
 class Phase(Enum):
     IDLE     = auto()
     APPROACH = auto()
+    CONTACT = auto()
     SEARCH   = auto()
     INSERT   = auto()
     DONE     = auto()
@@ -29,12 +30,13 @@ class InsertionEpisode:
         hole_cfg = self.config.get('hole_pose')
         self.hole_nom_pose = Pose(position=hole_cfg.get("pos"), quaternion=hole_cfg.get("quat"))
         self.hole_nom_pose.position[2] += hole_cfg.get("height")
+        self.dt = self.system.get_timestep()
 
     
     def reset(self, hole_pos: np.ndarray, hole_quat: np.ndarray) -> None:
         self.system.sim.reset_device_state("arm", self.q_init)
         self.system.sim.reset_object_pose("hole", hole_pos, hole_quat)
-        self.system.set_controller_mode("arm", "impedance")
+        self.system.set_controller_mode("arm", "dynamic_impedance")
         self.phase = Phase.IDLE
         self.running = True
     
@@ -42,24 +44,113 @@ class InsertionEpisode:
         while self.running:
             match self.phase:
                 case Phase.IDLE:
-                    self.phase = Phase.APPROACH if self.system_ready() else Phase.FAILED
+                    self.phase = self.system_ready()
                 case Phase.APPROACH:
-                    self.phase = Phase.SEARCH if self.run_approach() else Phase.FAILED
+                    self.phase = self.run_approach()
+                case Phase.CONTACT:
+                    self.phase = self.make_contact()
+                case Phase.SEARCH:
+                    self.phase = self.run_search()
             
             if self.phase == Phase.FAILED or self.phase == Phase.DONE:
                 self.running = False
-            elif self.phase == Phase.SEARCH:
+            elif self.phase == Phase.INSERT:
                 self.phase = Phase.DONE
                 self.running = False
 
-    def system_ready(self):
+    def run_search(self) -> Phase:
+        cfg      = self.config.get("episode", {}).get("search", {})
+        epsilon, timeout  = cfg.get("hole_detection_threshold"), cfg.get("timeout", 15.0)
+        t_start, t  = time.time(), 0.0
+
+        # wiggle parameters from config
+        wig      = cfg.get("wiggle", {})
+        a, f, phi, az = np.array(wig.get("a")), np.array(wig.get("f")), np.array(wig.get("phi")), wig.get("az")
+
+        # freeze reference at contact surface
+        state    = self.system.get_state()[self.device_name]
+        # compose hole orientation with approach quaternion to face downward
+        hole_quat     = self.hole_nom_pose.quaternion          # wxyz
+        approach_quat = np.array([0, 1, 0, 0])                # wxyz, 180° flip
+
+        R_hole        = Rotation.from_quat([hole_quat[1], hole_quat[2], hole_quat[3], hole_quat[0]])
+        R_approach    = Rotation.from_quat([approach_quat[1], approach_quat[2], approach_quat[3], approach_quat[0]])
+        R_final       = R_hole * R_approach
+        q_xyzw        = R_final.as_quat()
+        q_down        = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])  # back to wxyz
+
+        x_ref = Pose(
+            position=np.array([self.hole_nom_pose.position[0],self.hole_nom_pose.position[1], self.xz0-0.02 ]),
+            quaternion=q_down
+        )
+
+        while True:
+            if time.time() - t_start > timeout:
+                return Phase.FAILED
+
+            state     = self.system.get_state()[self.device_name]
+            x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
+
+            # lissajous feedforward wrench
+            Fff       = a * np.sin(2 * np.pi * f * t + phi)
+            Fff[2]    = -az                                  # constant downward push
+
+            self.system.set_target(self.device_name, {
+                "x":   x_ref,
+                "xd":  np.zeros(6),
+                "xdd": np.zeros(6),
+                "Fff": Fff
+            })
+
+            # hole entrance: peg drops → z decreases
+            if self.xz0 - x_current.position[2] > epsilon:
+                return Phase.INSERT
+
+            t        += self.dt
+            time.sleep(self.dt)
+
+
+    def make_contact(self) -> Phase:
+        cfg         = self.config.get("episode", {}).get("contact", {})
+        f_threshold = cfg.get("force_threshold", 3.0)
+        timeout = cfg.get("timeout", 5.0)
+        f_push      = cfg.get("f_push", 3.0)
+        n_confirm   = cfg.get("n_confirm", 5)
+        t_start     = time.time()
+        n_above     = 0
+
+        while True:
+            if time.time() - t_start > timeout:
+                return Phase.FAILED
+
+            state   = self.system.get_state()[self.device_name]
+            sensors = self.system.sim.get_sensor_data()
+
+            # track current pose, pure force driven
+            x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
+            self.system.set_target(self.device_name, {
+                "x":   x_current,
+                "xd":  np.zeros(6),
+                "xdd": np.zeros(6),
+                "Fff": np.array([0.0, 0.0, -f_push, 0.0, 0.0, 0.0])
+            })
+
+            f_ext = sensors.get(f'{self.prefix}ft_force', np.zeros(6))
+            if abs(f_ext[2]) > f_threshold: n_above += 1
+            else: n_above = 0
+
+            if n_above >= n_confirm:
+                self.xz0 = x_current.position[2]
+                return Phase.SEARCH
+
+            time.sleep(self.dt)
+
+    def system_ready(self) -> Phase:
         while not self.system.sim.running:
             time.sleep(0.1)
-        return True
+        return Phase.APPROACH
 
-    from scipy.spatial.transform import Rotation
-
-    def run_approach(self) -> bool:
+    def run_approach(self) -> Phase:
         cfg_app = self.config.get("episode", {}).get("approach")
 
         state = self.system.get_state()
@@ -96,21 +187,20 @@ class InsertionEpisode:
         tip = sensors[f'{self.prefix}peg_tip_pos'].copy()
         tip[2] += self.peg_offset
         err = np.linalg.norm(tip - p2)
-        return err < cfg_app.get("success_threshold")
+        return Phase.CONTACT if err < cfg_app.get("success_threshold") else Phase.FAILED
 
 
     def _execute_segment(self, p_start, q_start, p_end, q_end, max_speed) -> None:
-        dt = 0.005
         self.trajectory.plan_with_speed(p_start, q_start, p_end, q_end, max_speed=max_speed)
 
         while not self.trajectory.is_done():
-            step = self.trajectory.step(dt)
+            step = self.trajectory.step(self.dt)
             target_pose = Pose(position=step["pos"], quaternion=step["quat"])
             self.system.set_target(self.device_name, {
                 "x": target_pose,
                 "xd": np.concatenate([step["vel"], step["omega"]])
             })
-            time.sleep(dt)
+            time.sleep(self.dt)
 
     def _sample_pose(self, nom_pose: Pose, xy_std:0.0, z_std: 0.0, angle_std: 0.0):
         nominal_pos = nom_pose.position

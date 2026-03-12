@@ -63,7 +63,7 @@ objects:
 
   - name: hole
     type: static
-    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/hole.xml
+    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/props/hole.xml
     pose:
       position: [0.5, 0, 0.425]
       orientation: [1, 0, 0, 0]

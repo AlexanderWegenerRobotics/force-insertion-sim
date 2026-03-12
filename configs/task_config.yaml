@@ -6,7 +6,7 @@ peg_ee_offset: 0.08
 hole_pose:
   pos: [0.5, 0, 0.425]
   quat: [1.0, 0.0, 0.0, 0.0]
-  height: 0.06
+  height: 0.1
   pertubation:
     xy_std: 0.00
     z_std: 0.00
@@ -24,12 +24,27 @@ devices:
 episode:
   approach:
     quat:  [0, 1, 0, 0]
-    pos_threshold: 0.00
-    hover_height: 0.07
+    pos_threshold: 0.01
+    hover_height: 0.05
     speed_transit: 0.3
-    speed_descent: 0.1
-    success_threshold: 0.01
+    speed_descent: 0.05
+    success_threshold: 0.05
     pertubation:
       xy_std: 0.00
       z_std: 0.00
       angle_std_deg: 0.0
+
+  contact:
+    force_threshold: 2.0    # N, when to consider surface touched
+    f_push: 4.0
+    timeout: 5.0
+    n_confirm: 100
+
+  search:
+    hole_detection_threshold: 0.001
+    timeout: 20
+    wiggle:
+      a: [4.0, 4.0, 4.931, 0.766, 0.906, 3.228]
+      f:   [2.179, 1.561, 0.0,   0.718, 0.720, 0.143]
+      phi: [-0.078, 0.776, 0.0, -1.562, 0.610, -0.119]
+      az:  4.931
