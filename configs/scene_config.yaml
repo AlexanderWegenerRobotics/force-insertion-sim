@@ -14,6 +14,12 @@ render_cameras:
     enabled: True
     width: 1280
     height: 960
+  
+  - name: workspace_overview_3
+    attachment: False
+    enabled: True
+    width: 1280
+    height: 960
 
 display:
   enabled: True
@@ -63,7 +69,7 @@ objects:
 
   - name: hole
     type: static
-    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/props/hole.xml
+    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/props/holes/hole_cyl_s_tight/fixture.xml
     pose:
       position: [0.5, 0, 0.425]
       orientation: [1, 0, 0, 0]
@@ -72,12 +78,18 @@ objects:
 cameras:
   - name: workspace_overview_1
     type: fixed
-    pos: [0.4, 0.7, 0.6]
-    look_at: [0.4, 0.0, 0.8]
+    pos: [0.8, 0.0, 0.8]
+    look_at: [0.2, 0.0, 0.6]
     fovy: 90
 
   - name: workspace_overview_2
     type: fixed
-    pos: [0.8, 0.0, 0.8]
-    look_at: [0.2, 0.0, 0.6]
+    pos: [0.5, 0.07, 0.6]
+    look_at: [0.5, 0.0, 0.47]
+    fovy: 90
+
+  - name: workspace_overview_3
+    type: fixed
+    pos: [0.57, 0.0, 0.6]
+    look_at: [0.5, 0.0, 0.47]
     fovy: 90

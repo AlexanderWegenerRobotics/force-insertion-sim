@@ -5,6 +5,41 @@
     <mesh name="hole_cyl_s_medium_col_1" file="meshes/hole_cyl_s_medium_col_1.stl" scale="0.001 0.001 0.001"/>
     <mesh name="hole_cyl_s_medium_col_2" file="meshes/hole_cyl_s_medium_col_2.stl" scale="0.001 0.001 0.001"/>
     <mesh name="hole_cyl_s_medium_col_3" file="meshes/hole_cyl_s_medium_col_3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_4" file="meshes/hole_cyl_s_medium_col_4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_5" file="meshes/hole_cyl_s_medium_col_5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_6" file="meshes/hole_cyl_s_medium_col_6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_7" file="meshes/hole_cyl_s_medium_col_7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_8" file="meshes/hole_cyl_s_medium_col_8.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_9" file="meshes/hole_cyl_s_medium_col_9.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_10" file="meshes/hole_cyl_s_medium_col_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_11" file="meshes/hole_cyl_s_medium_col_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_12" file="meshes/hole_cyl_s_medium_col_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_13" file="meshes/hole_cyl_s_medium_col_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_14" file="meshes/hole_cyl_s_medium_col_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_15" file="meshes/hole_cyl_s_medium_col_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_16" file="meshes/hole_cyl_s_medium_col_16.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_17" file="meshes/hole_cyl_s_medium_col_17.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_18" file="meshes/hole_cyl_s_medium_col_18.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_19" file="meshes/hole_cyl_s_medium_col_19.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_20" file="meshes/hole_cyl_s_medium_col_20.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_21" file="meshes/hole_cyl_s_medium_col_21.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_22" file="meshes/hole_cyl_s_medium_col_22.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_23" file="meshes/hole_cyl_s_medium_col_23.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_24" file="meshes/hole_cyl_s_medium_col_24.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_25" file="meshes/hole_cyl_s_medium_col_25.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_26" file="meshes/hole_cyl_s_medium_col_26.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_27" file="meshes/hole_cyl_s_medium_col_27.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_28" file="meshes/hole_cyl_s_medium_col_28.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_29" file="meshes/hole_cyl_s_medium_col_29.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_30" file="meshes/hole_cyl_s_medium_col_30.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_31" file="meshes/hole_cyl_s_medium_col_31.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_32" file="meshes/hole_cyl_s_medium_col_32.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_33" file="meshes/hole_cyl_s_medium_col_33.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_34" file="meshes/hole_cyl_s_medium_col_34.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_35" file="meshes/hole_cyl_s_medium_col_35.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_36" file="meshes/hole_cyl_s_medium_col_36.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_37" file="meshes/hole_cyl_s_medium_col_37.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_cyl_s_medium_col_38" file="meshes/hole_cyl_s_medium_col_38.stl" scale="0.001 0.001 0.001"/>
   </asset>
 
   <worldbody>
@@ -14,24 +49,199 @@
             rgba="0.4 0.4 0.8 1.0"/>
       <geom name="hole_cyl_s_medium_col_0" type="mesh" mesh="hole_cyl_s_medium_col_0"
             rgba="0.4 0.4 0.8 0.0"
-            friction="1.0 0.005 0.0001"
-            solref="0.08 1"
-            solimp="0.8 0.9 0.001"/>
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
       <geom name="hole_cyl_s_medium_col_1" type="mesh" mesh="hole_cyl_s_medium_col_1"
             rgba="0.4 0.4 0.8 0.0"
-            friction="1.0 0.005 0.0001"
-            solref="0.08 1"
-            solimp="0.8 0.9 0.001"/>
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
       <geom name="hole_cyl_s_medium_col_2" type="mesh" mesh="hole_cyl_s_medium_col_2"
             rgba="0.4 0.4 0.8 0.0"
-            friction="1.0 0.005 0.0001"
-            solref="0.08 1"
-            solimp="0.8 0.9 0.001"/>
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
       <geom name="hole_cyl_s_medium_col_3" type="mesh" mesh="hole_cyl_s_medium_col_3"
             rgba="0.4 0.4 0.8 0.0"
-            friction="1.0 0.005 0.0001"
-            solref="0.08 1"
-            solimp="0.8 0.9 0.001"/>
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_4" type="mesh" mesh="hole_cyl_s_medium_col_4"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_5" type="mesh" mesh="hole_cyl_s_medium_col_5"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_6" type="mesh" mesh="hole_cyl_s_medium_col_6"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_7" type="mesh" mesh="hole_cyl_s_medium_col_7"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_8" type="mesh" mesh="hole_cyl_s_medium_col_8"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_9" type="mesh" mesh="hole_cyl_s_medium_col_9"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_10" type="mesh" mesh="hole_cyl_s_medium_col_10"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_11" type="mesh" mesh="hole_cyl_s_medium_col_11"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_12" type="mesh" mesh="hole_cyl_s_medium_col_12"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_13" type="mesh" mesh="hole_cyl_s_medium_col_13"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_14" type="mesh" mesh="hole_cyl_s_medium_col_14"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_15" type="mesh" mesh="hole_cyl_s_medium_col_15"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_16" type="mesh" mesh="hole_cyl_s_medium_col_16"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_17" type="mesh" mesh="hole_cyl_s_medium_col_17"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_18" type="mesh" mesh="hole_cyl_s_medium_col_18"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_19" type="mesh" mesh="hole_cyl_s_medium_col_19"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_20" type="mesh" mesh="hole_cyl_s_medium_col_20"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_21" type="mesh" mesh="hole_cyl_s_medium_col_21"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_22" type="mesh" mesh="hole_cyl_s_medium_col_22"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_23" type="mesh" mesh="hole_cyl_s_medium_col_23"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_24" type="mesh" mesh="hole_cyl_s_medium_col_24"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_25" type="mesh" mesh="hole_cyl_s_medium_col_25"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_26" type="mesh" mesh="hole_cyl_s_medium_col_26"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_27" type="mesh" mesh="hole_cyl_s_medium_col_27"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_28" type="mesh" mesh="hole_cyl_s_medium_col_28"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_29" type="mesh" mesh="hole_cyl_s_medium_col_29"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_30" type="mesh" mesh="hole_cyl_s_medium_col_30"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_31" type="mesh" mesh="hole_cyl_s_medium_col_31"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_32" type="mesh" mesh="hole_cyl_s_medium_col_32"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_33" type="mesh" mesh="hole_cyl_s_medium_col_33"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_34" type="mesh" mesh="hole_cyl_s_medium_col_34"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_35" type="mesh" mesh="hole_cyl_s_medium_col_35"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_36" type="mesh" mesh="hole_cyl_s_medium_col_36"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_37" type="mesh" mesh="hole_cyl_s_medium_col_37"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_cyl_s_medium_col_38" type="mesh" mesh="hole_cyl_s_medium_col_38"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
 
       <site name="hole_entrance" pos="0 0 0.1" size="0.002" rgba="0 1 0 1"/>
       <site name="hole_bottom"   pos="0 0 0.0" size="0.002" rgba="0 0 1 1"/>

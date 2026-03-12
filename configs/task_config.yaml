@@ -35,16 +35,29 @@ episode:
       angle_std_deg: 0.0
 
   contact:
-    force_threshold: 2.0    # N, when to consider surface touched
+    force_threshold: 2.0
     f_push: 4.0
     timeout: 5.0
     n_confirm: 100
 
   search:
-    hole_detection_threshold: 0.001
+    hole_detection_threshold: 0.002
     timeout: 40
     wiggle:
-      a: [8.0, 8.0, 4.931, 0.766, 0.906, 3.228]
+      a: [6.0, 6.0, 4.931, 0.766, 0.906, 3.228]
       f:   [2.179, 1.561, 0.0,   0.718, 0.720, 0.143]
       phi: [-0.078, 0.776, 0.0, -1.562, 0.610, -0.119]
-      az:  4.931
+      az:  5
+
+  insert:
+    timeout: 30.0
+    insert_depth: 0.05
+    z_window: 1000
+    z_score_threshold: 3.0
+    velocity_drop_threshold: 0.001
+    done_threshold: 0.001
+    wiggle:
+      a:   [4.0, 4.0, 4.931, 0.766, 0.906, 3.228]
+      f:   [2.179, 1.561, 0.0, 0.718, 0.720, 0.143]
+      phi: [-0.078, 0.776, 0.0, -1.562, 0.610, -0.119]
+      az:  5

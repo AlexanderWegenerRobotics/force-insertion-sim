@@ -1,0 +1,33 @@
+name,type,shape,dim_1_mm,dim_2_mm,dim_3_mm,notes
+peg_sq_s,peg,square,20,20,80,cross-section 20x20mm length 80mm
+peg_sq_l,peg,square,30,30,80,cross-section 30x30mm length 80mm
+peg_rect_s,peg,rectangle,20,30,80,cross-section 20x30mm length 80mm
+peg_rect_l,peg,rectangle,25,40,80,cross-section 25x40mm length 80mm
+peg_cyl_s,peg,cylinder,20,20,80,diameter 20mm length 80mm
+peg_cyl_l,peg,cylinder,30,30,80,diameter 30mm length 80mm
+peg_hex_s,peg,hexagon,30,30,80,across flats 30mm length 80mm
+peg_hex_l,peg,hexagon,40,40,80,across flats 40mm length 80mm
+hole_sq_s_tight,hole,square,20.4,20.4,100,inner 20.4x20.4mm depth 100mm clearance 0.2mm/side
+hole_sq_s_medium,hole,square,20.8,20.8,100,inner 20.8x20.8mm depth 100mm clearance 0.4mm/side
+hole_sq_s_loose,hole,square,21.4,21.4,100,inner 21.4x21.4mm depth 100mm clearance 0.7mm/side
+hole_sq_l_tight,hole,square,30.4,30.4,100,inner 30.4x30.4mm depth 100mm clearance 0.2mm/side
+hole_sq_l_medium,hole,square,30.8,30.8,100,inner 30.8x30.8mm depth 100mm clearance 0.4mm/side
+hole_sq_l_loose,hole,square,31.4,31.4,100,inner 31.4x31.4mm depth 100mm clearance 0.7mm/side
+hole_rect_s_tight,hole,rectangle,20.4,30.4,100,inner 20.4x30.4mm depth 100mm clearance 0.2mm/side
+hole_rect_s_medium,hole,rectangle,20.8,30.8,100,inner 20.8x30.8mm depth 100mm clearance 0.4mm/side
+hole_rect_s_loose,hole,rectangle,21.4,31.4,100,inner 21.4x31.4mm depth 100mm clearance 0.7mm/side
+hole_rect_l_tight,hole,rectangle,25.4,40.4,100,inner 25.4x40.4mm depth 100mm clearance 0.2mm/side
+hole_rect_l_medium,hole,rectangle,25.8,40.8,100,inner 25.8x40.8mm depth 100mm clearance 0.4mm/side
+hole_rect_l_loose,hole,rectangle,26.4,41.4,100,inner 26.4x41.4mm depth 100mm clearance 0.7mm/side
+hole_cyl_s_tight,hole,cylinder,20.4,20.4,100,inner diameter 20.4mm depth 100mm clearance 0.2mm radial
+hole_cyl_s_medium,hole,cylinder,20.8,20.8,100,inner diameter 20.8mm depth 100mm clearance 0.4mm radial
+hole_cyl_s_loose,hole,cylinder,21.4,21.4,100,inner diameter 21.4mm depth 100mm clearance 0.7mm radial
+hole_cyl_l_tight,hole,cylinder,30.4,30.4,100,inner diameter 30.4mm depth 100mm clearance 0.2mm radial (model named hole_cyl_l)
+hole_cyl_l_medium,hole,cylinder,30.8,30.8,100,inner diameter 30.8mm depth 100mm clearance 0.4mm radial (model named hole_cyl_l)
+hole_cyl_l_loose,hole,cylinder,31.4,31.4,100,inner diameter 31.4mm depth 100mm clearance 0.7mm radial (model named hole_cyl_l)
+hole_hex_s_tight,hole,hexagon,30.4,30.4,100,across flats 30.4mm depth 100mm clearance 0.2mm/side
+hole_hex_s_medium,hole,hexagon,30.8,30.8,100,across flats 30.8mm depth 100mm clearance 0.4mm/side
+hole_hex_s_loose,hole,hexagon,31.4,31.4,100,across flats 31.4mm depth 100mm clearance 0.7mm/side
+hole_hex_l_tight,hole,hexagon,40.4,40.4,100,across flats 40.4mm depth 100mm clearance 0.2mm/side
+hole_hex_l_medium,hole,hexagon,40.8,40.8,100,across flats 40.8mm depth 100mm clearance 0.4mm/side
+hole_hex_l_loose,hole,hexagon,41.4,41.4,100,across flats 41.4mm depth 100mm clearance 0.7mm/side

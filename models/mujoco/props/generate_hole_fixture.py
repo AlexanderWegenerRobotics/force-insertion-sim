@@ -1,11 +1,13 @@
 """
 Decompose concave STLs into convex parts for MuJoCo collision.
+Be carefull to setup the threshold and reolution properly. This needs to be a tradeoff between complexity and accuracy. Otherwise system might not enable insertion
 
 Single file:
     python generate_hole_fixture.py meshes/raw/hole_cyl_l_loose.stl --output-root holes
 
 Batch (all STLs in a folder):
     python generate_hole_fixture.py meshes/raw/ --output-root holes --batch
+    python generate_hole_fixture.py meshes/raw/ --output-root holes --batch --threshold 0.01 --resolution 200
 """
 
 import argparse
@@ -135,9 +137,9 @@ def _generate_xml(
         geom_lines.append(
             f'      <geom name="{stem}_col_{i}" type="mesh" mesh="{stem}_col_{i}"\n'
             f'            rgba="0.4 0.4 0.8 0.0"\n'
-            f'            friction="1.0 0.005 0.0001"\n'
-            f'            solref="0.08 1"\n'
-            f'            solimp="0.8 0.9 0.001"/>'
+            f'            friction="0.2 0.005 0.0001"\n'
+            f'            solref="0.02 1"\n'
+            f'            solimp="0.9 0.95 0.001"/>'
         )
     geoms = "\n".join(geom_lines)
 

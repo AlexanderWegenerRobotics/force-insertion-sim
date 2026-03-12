@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from collections import deque
 from scipy.spatial.transform import Rotation
 from enum import Enum, auto
 from simcore.common.pose import Pose
@@ -9,7 +10,7 @@ from task.trajectory import TrajectoryPlanner
 class Phase(Enum):
     IDLE     = auto()
     APPROACH = auto()
-    CONTACT = auto()
+    CONTACT  = auto()
     SEARCH   = auto()
     INSERT   = auto()
     DONE     = auto()
@@ -32,14 +33,13 @@ class InsertionEpisode:
         self.hole_nom_pose.position[2] += hole_cfg.get("height")
         self.dt = self.system.get_timestep()
 
-    
     def reset(self, hole_pos: np.ndarray, hole_quat: np.ndarray) -> None:
         self.system.sim.reset_device_state("arm", self.q_init)
         self.system.sim.reset_object_pose("hole", hole_pos, hole_quat)
         self.system.set_controller_mode("arm", "dynamic_impedance")
         self.phase = Phase.IDLE
         self.running = True
-    
+
     def run(self):
         while self.running:
             match self.phase:
@@ -56,37 +56,99 @@ class InsertionEpisode:
                     self.phase = self.run_search()
                     print(f"Phase: {self.phase.name}")
                 case Phase.INSERT:
+                    self.phase = self.run_insert()
                     print(f"Phase: {self.phase.name}")
-            
-            if self.phase == Phase.FAILED or self.phase == Phase.DONE:
+
+            if self.phase in (Phase.FAILED, Phase.DONE):
                 self.running = False
-            elif self.phase == Phase.INSERT:
-                self.phase = Phase.DONE
-                self.running = False
+
+    def run_insert(self) -> Phase:
+        cfg     = self.config.get("episode", {}).get("insert", {})
+        timeout = cfg.get("timeout", 30.0)
+        wig     = cfg.get("wiggle", {})
+        a, f, phi, az = np.array(wig.get("a")), np.array(wig.get("f")), np.array(wig.get("phi")), wig.get("az")
+
+        z_window, z_score_thresh = cfg.get("z_window"), cfg.get("z_score_threshold")
+        v_drop_thresh, done_thresh = cfg.get("velocity_drop_threshold"), cfg.get("done_threshold")
+
+        state = self.system.get_state()[self.device_name]
+
+        z_buf        = deque(maxlen=z_window)
+        fres_z_prev  = 0.0
+        insert_state = "STUCK"
+        t_start, t   = time.time(), 0.0
+
+        while True:
+            if time.time() - t_start > timeout:
+                return Phase.FAILED
+
+            state     = self.system.get_state()[self.device_name]
+            x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
+            sensors   = self.system.sim.get_sensor_data()
+
+            q, qd, tau   = state.q, state.qd, state.tau
+            f_ext    = sensors.get(f'{self.prefix}ft_force', np.zeros(6))
+            f_res_z  = self.system.ctrl[self.device_name].get_internal_wrench(q, qd, tau)[2] - f_ext[2]
+
+            z_buf.append(x_current.position[2])
+            z_arr = np.array(z_buf)
+            z_score = abs((z_arr[-1] - z_arr.mean()) / (z_arr.std() + 1e-9)) if len(z_buf) > 10 else 0.0
+
+            xd = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(state.q, state.qd)
+            speed = np.linalg.norm(xd[:3])
+
+            if insert_state == "STUCK":
+                Fff      = a * np.sin(2 * np.pi * f * t + phi)
+                Fff[2]   = -az
+                if z_score > z_score_thresh:
+                    insert_state = "UNSTUCK"
+
+            elif insert_state == "UNSTUCK":
+                Fff      = a * np.sin(2 * np.pi * f * t + phi)
+                Fff[2]   = -az
+                if fres_z_prev < f_res_z and speed < v_drop_thresh:
+                    insert_state = "ALIGNED"
+                elif speed < v_drop_thresh:
+                    insert_state = "STUCK"
+
+            elif insert_state == "ALIGNED":
+                Fff = np.array([0.0, 0.0, -az, 0.0, 0.0, 0.0])
+                if self.xz0 - x_current.position[2] > done_thresh + cfg.get("insert_depth", 0.05):
+                    return Phase.DONE
+                if speed < v_drop_thresh:
+                    insert_state = "STUCK"
+
+            self.system.set_target(self.device_name, {
+                "x":   x_current,
+                "xd":  np.zeros(6),
+                "xdd": np.zeros(6),
+                "Fff": Fff
+            })
+
+            fres_z_prev = f_res_z
+            t          += self.dt
+            time.sleep(self.dt)
 
     def run_search(self) -> Phase:
         cfg      = self.config.get("episode", {}).get("search", {})
         epsilon, timeout  = cfg.get("hole_detection_threshold"), cfg.get("timeout", 15.0)
         t_start, t  = time.time(), 0.0
 
-        # wiggle parameters from config
         wig      = cfg.get("wiggle", {})
         a, f, phi, az = np.array(wig.get("a")), np.array(wig.get("f")), np.array(wig.get("phi")), wig.get("az")
 
-        # freeze reference at contact surface
         state    = self.system.get_state()[self.device_name]
-        # compose hole orientation with approach quaternion to face downward
-        hole_quat     = self.hole_nom_pose.quaternion          # wxyz
-        approach_quat = np.array([0, 1, 0, 0])                # wxyz, 180° flip
+        hole_quat     = self.hole_nom_pose.quaternion
+        approach_quat = np.array([0, 1, 0, 0])
 
         R_hole        = Rotation.from_quat([hole_quat[1], hole_quat[2], hole_quat[3], hole_quat[0]])
         R_approach    = Rotation.from_quat([approach_quat[1], approach_quat[2], approach_quat[3], approach_quat[0]])
         R_final       = R_hole * R_approach
         q_xyzw        = R_final.as_quat()
-        q_down        = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])  # back to wxyz
+        q_down        = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])
 
         x_ref = Pose(
-            position=np.array([self.hole_nom_pose.position[0],self.hole_nom_pose.position[1], self.xz0-0.02 ]),
+            position=np.array([self.hole_nom_pose.position[0], self.hole_nom_pose.position[1], self.xz0 - 0.02]),
             quaternion=q_down
         )
 
@@ -97,9 +159,8 @@ class InsertionEpisode:
             state     = self.system.get_state()[self.device_name]
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
 
-            # lissajous feedforward wrench
             Fff       = a * np.sin(2 * np.pi * f * t + phi)
-            Fff[2]    = -az                                  # constant downward push
+            Fff[2]    = -az
 
             self.system.set_target(self.device_name, {
                 "x":   x_ref,
@@ -108,18 +169,16 @@ class InsertionEpisode:
                 "Fff": Fff
             })
 
-            # hole entrance: peg drops → z decreases
             if self.xz0 - x_current.position[2] > epsilon:
                 return Phase.INSERT
 
             t        += self.dt
             time.sleep(self.dt)
 
-
     def make_contact(self) -> Phase:
         cfg         = self.config.get("episode", {}).get("contact", {})
         f_threshold = cfg.get("force_threshold", 3.0)
-        timeout = cfg.get("timeout", 5.0)
+        timeout     = cfg.get("timeout", 5.0)
         f_push      = cfg.get("f_push", 3.0)
         n_confirm   = cfg.get("n_confirm", 5)
         t_start     = time.time()
@@ -132,7 +191,6 @@ class InsertionEpisode:
             state   = self.system.get_state()[self.device_name]
             sensors = self.system.sim.get_sensor_data()
 
-            # track current pose, pure force driven
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
             self.system.set_target(self.device_name, {
                 "x":   x_current,
@@ -163,16 +221,14 @@ class InsertionEpisode:
         current_pose = self.system.ctrl[self.device_name].get_ee_pose_world(state[self.device_name])
         p0, q0 = current_pose.position, current_pose.quaternion
 
-        # Approach quat is relative to hole frame, compose with hole orientation
-        hole_quat = self.hole_nom_pose.quaternion  # wxyz
-        approach_quat = np.array(cfg_app.get("quat", [0, 1, 0, 0]))  # wxyz
+        hole_quat     = self.hole_nom_pose.quaternion
+        approach_quat = np.array(cfg_app.get("quat", [0, 1, 0, 0]))
 
-        # Convert to scipy (xyzw), compose, convert back
-        R_hole = Rotation.from_quat([hole_quat[1], hole_quat[2], hole_quat[3], hole_quat[0]])
+        R_hole     = Rotation.from_quat([hole_quat[1], hole_quat[2], hole_quat[3], hole_quat[0]])
         R_approach = Rotation.from_quat([approach_quat[1], approach_quat[2], approach_quat[3], approach_quat[0]])
-        R_final = R_hole * R_approach
-        q_xyzw = R_final.as_quat()
-        q2_nominal = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])  # back to wxyz
+        R_final    = R_hole * R_approach
+        q_xyzw     = R_final.as_quat()
+        q2_nominal = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])
 
         nom_pose = Pose(
             position=self.hole_nom_pose.position.copy(),
@@ -191,11 +247,8 @@ class InsertionEpisode:
 
         sensors = self.system.sim.get_sensor_data()
         tip = sensors[f'{self.prefix}peg_tip_pos'].copy()
-        #tip[2] += self.peg_offset
         err = np.linalg.norm(tip - p2)
-        print(err)
         return Phase.CONTACT if err < cfg_app.get("success_threshold") else Phase.FAILED
-
 
     def _execute_segment(self, p_start, q_start, p_end, q_end, max_speed) -> None:
         self.trajectory.plan_with_speed(p_start, q_start, p_end, q_end, max_speed=max_speed)
@@ -209,17 +262,17 @@ class InsertionEpisode:
             })
             time.sleep(self.dt)
 
-    def _sample_pose(self, nom_pose: Pose, xy_std:0.0, z_std: 0.0, angle_std: 0.0):
+    def _sample_pose(self, nom_pose: Pose, xy_std: 0.0, z_std: 0.0, angle_std: 0.0):
         nominal_pos = nom_pose.position
         pos = nominal_pos + np.array([np.random.normal(0, xy_std), np.random.normal(0, xy_std), np.random.normal(0, z_std)])
 
         angle = np.random.normal(0, np.deg2rad(angle_std))
-        axis = np.random.randn(3)
+        axis  = np.random.randn(3)
         axis /= np.linalg.norm(axis)
         delta_rot = Rotation.from_rotvec(axis * angle)
 
         nominal_quat = nom_pose.quaternion
-        nominal_rot = Rotation.from_quat([nominal_quat[1], nominal_quat[2], nominal_quat[3], nominal_quat[0]])
+        nominal_rot  = Rotation.from_quat([nominal_quat[1], nominal_quat[2], nominal_quat[3], nominal_quat[0]])
         perturbed_rot = delta_rot * nominal_rot
         quat_xyzw = perturbed_rot.as_quat()
         quat = np.array([quat_xyzw[3], quat_xyzw[0], quat_xyzw[1], quat_xyzw[2]])
