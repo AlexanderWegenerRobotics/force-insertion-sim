@@ -1,0 +1,520 @@
+<mujoco model="hole_hex_l_tight">
+  <asset>
+    <mesh name="hole_hex_l_tight_visual" file="meshes/hole_hex_l_tight.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_0" file="meshes/hole_hex_l_tight_col_0.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_1" file="meshes/hole_hex_l_tight_col_1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_2" file="meshes/hole_hex_l_tight_col_2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_3" file="meshes/hole_hex_l_tight_col_3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_4" file="meshes/hole_hex_l_tight_col_4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_5" file="meshes/hole_hex_l_tight_col_5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_6" file="meshes/hole_hex_l_tight_col_6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_7" file="meshes/hole_hex_l_tight_col_7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_8" file="meshes/hole_hex_l_tight_col_8.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_9" file="meshes/hole_hex_l_tight_col_9.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_10" file="meshes/hole_hex_l_tight_col_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_11" file="meshes/hole_hex_l_tight_col_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_12" file="meshes/hole_hex_l_tight_col_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_13" file="meshes/hole_hex_l_tight_col_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_14" file="meshes/hole_hex_l_tight_col_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_15" file="meshes/hole_hex_l_tight_col_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_16" file="meshes/hole_hex_l_tight_col_16.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_17" file="meshes/hole_hex_l_tight_col_17.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_18" file="meshes/hole_hex_l_tight_col_18.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_19" file="meshes/hole_hex_l_tight_col_19.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_20" file="meshes/hole_hex_l_tight_col_20.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_21" file="meshes/hole_hex_l_tight_col_21.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_22" file="meshes/hole_hex_l_tight_col_22.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_23" file="meshes/hole_hex_l_tight_col_23.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_24" file="meshes/hole_hex_l_tight_col_24.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_25" file="meshes/hole_hex_l_tight_col_25.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_26" file="meshes/hole_hex_l_tight_col_26.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_27" file="meshes/hole_hex_l_tight_col_27.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_28" file="meshes/hole_hex_l_tight_col_28.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_29" file="meshes/hole_hex_l_tight_col_29.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_30" file="meshes/hole_hex_l_tight_col_30.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_31" file="meshes/hole_hex_l_tight_col_31.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_32" file="meshes/hole_hex_l_tight_col_32.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_33" file="meshes/hole_hex_l_tight_col_33.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_34" file="meshes/hole_hex_l_tight_col_34.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_35" file="meshes/hole_hex_l_tight_col_35.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_36" file="meshes/hole_hex_l_tight_col_36.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_37" file="meshes/hole_hex_l_tight_col_37.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_38" file="meshes/hole_hex_l_tight_col_38.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_39" file="meshes/hole_hex_l_tight_col_39.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_40" file="meshes/hole_hex_l_tight_col_40.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_41" file="meshes/hole_hex_l_tight_col_41.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_42" file="meshes/hole_hex_l_tight_col_42.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_43" file="meshes/hole_hex_l_tight_col_43.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_44" file="meshes/hole_hex_l_tight_col_44.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_45" file="meshes/hole_hex_l_tight_col_45.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_46" file="meshes/hole_hex_l_tight_col_46.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_47" file="meshes/hole_hex_l_tight_col_47.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_48" file="meshes/hole_hex_l_tight_col_48.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_49" file="meshes/hole_hex_l_tight_col_49.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_50" file="meshes/hole_hex_l_tight_col_50.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_51" file="meshes/hole_hex_l_tight_col_51.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_52" file="meshes/hole_hex_l_tight_col_52.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_53" file="meshes/hole_hex_l_tight_col_53.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_54" file="meshes/hole_hex_l_tight_col_54.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_55" file="meshes/hole_hex_l_tight_col_55.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_56" file="meshes/hole_hex_l_tight_col_56.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_57" file="meshes/hole_hex_l_tight_col_57.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_58" file="meshes/hole_hex_l_tight_col_58.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_59" file="meshes/hole_hex_l_tight_col_59.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_60" file="meshes/hole_hex_l_tight_col_60.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_61" file="meshes/hole_hex_l_tight_col_61.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_62" file="meshes/hole_hex_l_tight_col_62.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_63" file="meshes/hole_hex_l_tight_col_63.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_64" file="meshes/hole_hex_l_tight_col_64.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_65" file="meshes/hole_hex_l_tight_col_65.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_66" file="meshes/hole_hex_l_tight_col_66.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_67" file="meshes/hole_hex_l_tight_col_67.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_68" file="meshes/hole_hex_l_tight_col_68.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_69" file="meshes/hole_hex_l_tight_col_69.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_70" file="meshes/hole_hex_l_tight_col_70.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_71" file="meshes/hole_hex_l_tight_col_71.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_72" file="meshes/hole_hex_l_tight_col_72.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_73" file="meshes/hole_hex_l_tight_col_73.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_74" file="meshes/hole_hex_l_tight_col_74.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_75" file="meshes/hole_hex_l_tight_col_75.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_76" file="meshes/hole_hex_l_tight_col_76.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_77" file="meshes/hole_hex_l_tight_col_77.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_78" file="meshes/hole_hex_l_tight_col_78.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_79" file="meshes/hole_hex_l_tight_col_79.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_80" file="meshes/hole_hex_l_tight_col_80.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_81" file="meshes/hole_hex_l_tight_col_81.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_82" file="meshes/hole_hex_l_tight_col_82.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hole_hex_l_tight_col_83" file="meshes/hole_hex_l_tight_col_83.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+    <body name="fixture" pos="0 0 0">
+      <geom name="hole_hex_l_tight_visual" type="mesh" mesh="hole_hex_l_tight_visual"
+            contype="0" conaffinity="0"
+            rgba="0.4 0.4 0.8 1.0"/>
+      <geom name="hole_hex_l_tight_col_0" type="mesh" mesh="hole_hex_l_tight_col_0"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_1" type="mesh" mesh="hole_hex_l_tight_col_1"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_2" type="mesh" mesh="hole_hex_l_tight_col_2"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_3" type="mesh" mesh="hole_hex_l_tight_col_3"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_4" type="mesh" mesh="hole_hex_l_tight_col_4"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_5" type="mesh" mesh="hole_hex_l_tight_col_5"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_6" type="mesh" mesh="hole_hex_l_tight_col_6"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_7" type="mesh" mesh="hole_hex_l_tight_col_7"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_8" type="mesh" mesh="hole_hex_l_tight_col_8"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_9" type="mesh" mesh="hole_hex_l_tight_col_9"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_10" type="mesh" mesh="hole_hex_l_tight_col_10"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_11" type="mesh" mesh="hole_hex_l_tight_col_11"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_12" type="mesh" mesh="hole_hex_l_tight_col_12"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_13" type="mesh" mesh="hole_hex_l_tight_col_13"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_14" type="mesh" mesh="hole_hex_l_tight_col_14"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_15" type="mesh" mesh="hole_hex_l_tight_col_15"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_16" type="mesh" mesh="hole_hex_l_tight_col_16"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_17" type="mesh" mesh="hole_hex_l_tight_col_17"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_18" type="mesh" mesh="hole_hex_l_tight_col_18"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_19" type="mesh" mesh="hole_hex_l_tight_col_19"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_20" type="mesh" mesh="hole_hex_l_tight_col_20"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_21" type="mesh" mesh="hole_hex_l_tight_col_21"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_22" type="mesh" mesh="hole_hex_l_tight_col_22"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_23" type="mesh" mesh="hole_hex_l_tight_col_23"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_24" type="mesh" mesh="hole_hex_l_tight_col_24"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_25" type="mesh" mesh="hole_hex_l_tight_col_25"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_26" type="mesh" mesh="hole_hex_l_tight_col_26"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_27" type="mesh" mesh="hole_hex_l_tight_col_27"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_28" type="mesh" mesh="hole_hex_l_tight_col_28"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_29" type="mesh" mesh="hole_hex_l_tight_col_29"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_30" type="mesh" mesh="hole_hex_l_tight_col_30"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_31" type="mesh" mesh="hole_hex_l_tight_col_31"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_32" type="mesh" mesh="hole_hex_l_tight_col_32"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_33" type="mesh" mesh="hole_hex_l_tight_col_33"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_34" type="mesh" mesh="hole_hex_l_tight_col_34"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_35" type="mesh" mesh="hole_hex_l_tight_col_35"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_36" type="mesh" mesh="hole_hex_l_tight_col_36"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_37" type="mesh" mesh="hole_hex_l_tight_col_37"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_38" type="mesh" mesh="hole_hex_l_tight_col_38"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_39" type="mesh" mesh="hole_hex_l_tight_col_39"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_40" type="mesh" mesh="hole_hex_l_tight_col_40"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_41" type="mesh" mesh="hole_hex_l_tight_col_41"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_42" type="mesh" mesh="hole_hex_l_tight_col_42"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_43" type="mesh" mesh="hole_hex_l_tight_col_43"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_44" type="mesh" mesh="hole_hex_l_tight_col_44"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_45" type="mesh" mesh="hole_hex_l_tight_col_45"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_46" type="mesh" mesh="hole_hex_l_tight_col_46"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_47" type="mesh" mesh="hole_hex_l_tight_col_47"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_48" type="mesh" mesh="hole_hex_l_tight_col_48"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_49" type="mesh" mesh="hole_hex_l_tight_col_49"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_50" type="mesh" mesh="hole_hex_l_tight_col_50"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_51" type="mesh" mesh="hole_hex_l_tight_col_51"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_52" type="mesh" mesh="hole_hex_l_tight_col_52"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_53" type="mesh" mesh="hole_hex_l_tight_col_53"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_54" type="mesh" mesh="hole_hex_l_tight_col_54"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_55" type="mesh" mesh="hole_hex_l_tight_col_55"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_56" type="mesh" mesh="hole_hex_l_tight_col_56"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_57" type="mesh" mesh="hole_hex_l_tight_col_57"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_58" type="mesh" mesh="hole_hex_l_tight_col_58"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_59" type="mesh" mesh="hole_hex_l_tight_col_59"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_60" type="mesh" mesh="hole_hex_l_tight_col_60"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_61" type="mesh" mesh="hole_hex_l_tight_col_61"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_62" type="mesh" mesh="hole_hex_l_tight_col_62"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_63" type="mesh" mesh="hole_hex_l_tight_col_63"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_64" type="mesh" mesh="hole_hex_l_tight_col_64"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_65" type="mesh" mesh="hole_hex_l_tight_col_65"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_66" type="mesh" mesh="hole_hex_l_tight_col_66"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_67" type="mesh" mesh="hole_hex_l_tight_col_67"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_68" type="mesh" mesh="hole_hex_l_tight_col_68"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_69" type="mesh" mesh="hole_hex_l_tight_col_69"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_70" type="mesh" mesh="hole_hex_l_tight_col_70"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_71" type="mesh" mesh="hole_hex_l_tight_col_71"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_72" type="mesh" mesh="hole_hex_l_tight_col_72"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_73" type="mesh" mesh="hole_hex_l_tight_col_73"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_74" type="mesh" mesh="hole_hex_l_tight_col_74"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_75" type="mesh" mesh="hole_hex_l_tight_col_75"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_76" type="mesh" mesh="hole_hex_l_tight_col_76"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_77" type="mesh" mesh="hole_hex_l_tight_col_77"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_78" type="mesh" mesh="hole_hex_l_tight_col_78"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_79" type="mesh" mesh="hole_hex_l_tight_col_79"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_80" type="mesh" mesh="hole_hex_l_tight_col_80"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_81" type="mesh" mesh="hole_hex_l_tight_col_81"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_82" type="mesh" mesh="hole_hex_l_tight_col_82"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+      <geom name="hole_hex_l_tight_col_83" type="mesh" mesh="hole_hex_l_tight_col_83"
+            rgba="0.4 0.4 0.8 0.0"
+            friction="0.2 0.005 0.0001"
+            solref="0.02 1"
+            solimp="0.9 0.95 0.001"/>
+
+      <site name="hole_entrance" pos="0 0 0.1" size="0.002" rgba="0 1 0 1"/>
+      <site name="hole_bottom"   pos="0 0 0.0" size="0.002" rgba="0 0 1 1"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -31,6 +31,7 @@ class InsertionEpisode:
         hole_cfg = self.config.get('hole_pose')
         self.hole_nom_pose = Pose(position=hole_cfg.get("pos"), quaternion=hole_cfg.get("quat"))
         self.hole_nom_pose.position[2] += hole_cfg.get("height")
+        self.insertion_success_z = self.hole_nom_pose.position[2] - self.config.get("insert_depth")
         self.dt = self.system.get_timestep()
 
     def reset(self, hole_pos: np.ndarray, hole_quat: np.ndarray) -> None:
@@ -45,19 +46,14 @@ class InsertionEpisode:
             match self.phase:
                 case Phase.IDLE:
                     self.phase = self.system_ready()
-                    print(f"Phase: {self.phase.name}")
                 case Phase.APPROACH:
                     self.phase = self.run_approach()
-                    print(f"Phase: {self.phase.name}")
                 case Phase.CONTACT:
                     self.phase = self.make_contact()
-                    print(f"Phase: {self.phase.name}")
                 case Phase.SEARCH:
                     self.phase = self.run_search()
-                    print(f"Phase: {self.phase.name}")
                 case Phase.INSERT:
                     self.phase = self.run_insert()
-                    print(f"Phase: {self.phase.name}")
 
             if self.phase in (Phase.FAILED, Phase.DONE):
                 self.running = False
@@ -97,6 +93,9 @@ class InsertionEpisode:
             xd = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(state.q, state.qd)
             speed = np.linalg.norm(xd[:3])
 
+            if x_current.position[2] - self.peg_offset < self.insertion_success_z:
+                return Phase.DONE
+
             if insert_state == "STUCK":
                 Fff      = a * np.sin(2 * np.pi * f * t + phi)
                 Fff[2]   = -az
@@ -113,8 +112,6 @@ class InsertionEpisode:
 
             elif insert_state == "ALIGNED":
                 Fff = np.array([0.0, 0.0, -az, 0.0, 0.0, 0.0])
-                if self.xz0 - x_current.position[2] > done_thresh + cfg.get("insert_depth", 0.05):
-                    return Phase.DONE
                 if speed < v_drop_thresh:
                     insert_state = "STUCK"
 
