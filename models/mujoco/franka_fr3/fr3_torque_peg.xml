@@ -3,7 +3,7 @@
   <option integrator="implicitfast"/>
 
   <asset>
-      <mesh name="peg" file="../../props/pegs/peg_cyl_l.STL" scale="0.001 0.001 0.001"/>
+      <mesh name="peg" file="../../props/pegs/peg_rect_s.STL" scale="0.001 0.001 0.001"/>
   </asset>
 
   <default>

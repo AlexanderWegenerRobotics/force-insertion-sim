@@ -5,22 +5,30 @@ from scipy.spatial.transform import Rotation
 from enum import Enum, auto
 from simcore.common.pose import Pose
 from task.trajectory import TrajectoryPlanner
+from data.episode_data_collector import EpisodeDataCollector
 
 
 class Phase(Enum):
-    IDLE     = auto()
-    APPROACH = auto()
-    CONTACT  = auto()
-    SEARCH   = auto()
-    INSERT   = auto()
-    DONE     = auto()
-    FAILED   = auto()
+    UNDEFINED = auto()
+    IDLE      = auto()
+    APPROACH  = auto()
+    CONTACT   = auto()
+    SEARCH    = auto()
+    INSERT    = auto()
+    DONE      = auto()
+    FAILED    = auto()
 
 class InsertionEpisode:
-    def __init__(self, system=None, config=None):
+    def __init__(self, system=None, config=None, collector=None):
         self.system = system
         self.config = config
         self.device_name = config.get("device_name", "arm")
+        self.collector = collector
+        self.headless = system.headless
+
+        self.phase = Phase.UNDEFINED
+        self.fail_phase = Phase.UNDEFINED
+        self.running = False
 
         self.prefix = "arm/"
         self.trajectory = TrajectoryPlanner()
@@ -34,12 +42,25 @@ class InsertionEpisode:
         self.insertion_success_z = self.hole_nom_pose.position[2] - self.config.get("insert_depth")
         self.dt = self.system.get_timestep()
 
+        # Episode sim-time counter, reset each episode
+        self._sim_time = 0.0
+
+    def _tick(self):
+        """Advance one timestep: either step physics synchronously or sleep."""
+        if self.headless:
+            self.system.step()
+        else:
+            time.sleep(self.dt)
+        self._sim_time += self.dt
+
     def reset(self, hole_pos: np.ndarray, hole_quat: np.ndarray) -> None:
         self.system.sim.reset_device_state("arm", self.q_init)
         self.system.sim.reset_object_pose("hole", hole_pos, hole_quat)
         self.system.set_controller_mode("arm", "dynamic_impedance")
         self.phase = Phase.IDLE
+        self.fail_phase = Phase.UNDEFINED
         self.running = True
+        self._sim_time = 0.0
 
     def run(self):
         while self.running:
@@ -58,6 +79,28 @@ class InsertionEpisode:
             if self.phase in (Phase.FAILED, Phase.DONE):
                 self.running = False
 
+    def _collect(self, state, x_current, sensors, Fff):
+        if self.collector is None:
+            return
+        q, qd, tau = state.q, state.qd, state.tau
+        f_ext = np.zeros(6)
+        f_ext[:3]      = sensors.get(f'{self.prefix}ft_force', np.zeros(3))
+        f_ext[3:]      = sensors.get(f'{self.prefix}ft_torque', np.zeros(3))
+        f_internal = self.system.ctrl[self.device_name].get_internal_wrench(q, qd, tau)
+        ee_vel     = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(q, qd)
+        peg_tip    = sensors.get(f'{self.prefix}peg_tip_pos', np.zeros(3))
+        self.collector.record(
+            f_ext       = f_ext,
+            f_internal  = f_internal,
+            ee_velocity = ee_vel,
+            Fff         = Fff,
+            peg_tip_pos = peg_tip,
+            ee_pose     = x_current.as_7d(),
+            mode        = 1,
+            q           = q,
+            sim_time    = self._sim_time,
+        )
+
     def run_insert(self) -> Phase:
         cfg     = self.config.get("episode", {}).get("insert", {})
         timeout = cfg.get("timeout", 30.0)
@@ -72,12 +115,10 @@ class InsertionEpisode:
         z_buf        = deque(maxlen=z_window)
         fres_z_prev  = 0.0
         insert_state = "STUCK"
-        t_start, t   = time.time(), 0.0
+        max_steps    = int(timeout / self.dt)
+        t            = 0.0
 
-        while True:
-            if time.time() - t_start > timeout:
-                return Phase.FAILED
-
+        for _ in range(max_steps):
             state     = self.system.get_state()[self.device_name]
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
             sensors   = self.system.sim.get_sensor_data()
@@ -115,6 +156,8 @@ class InsertionEpisode:
                 if speed < v_drop_thresh:
                     insert_state = "STUCK"
 
+            self._collect(state, x_current, sensors, Fff)
+
             self.system.set_target(self.device_name, {
                 "x":   x_current,
                 "xd":  np.zeros(6),
@@ -124,12 +167,16 @@ class InsertionEpisode:
 
             fres_z_prev = f_res_z
             t          += self.dt
-            time.sleep(self.dt)
+            self._tick()
+        
+        self.fail_phase = self.phase
+        return Phase.FAILED
 
     def run_search(self) -> Phase:
         cfg      = self.config.get("episode", {}).get("search", {})
         epsilon, timeout  = cfg.get("hole_detection_threshold"), cfg.get("timeout", 15.0)
-        t_start, t  = time.time(), 0.0
+        max_steps = int(timeout / self.dt)
+        t         = 0.0
 
         wig      = cfg.get("wiggle", {})
         a, f, phi, az = np.array(wig.get("a")), np.array(wig.get("f")), np.array(wig.get("phi")), wig.get("az")
@@ -149,15 +196,15 @@ class InsertionEpisode:
             quaternion=q_down
         )
 
-        while True:
-            if time.time() - t_start > timeout:
-                return Phase.FAILED
-
+        for _ in range(max_steps):
             state     = self.system.get_state()[self.device_name]
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
+            sensors   = self.system.sim.get_sensor_data()
 
             Fff       = a * np.sin(2 * np.pi * f * t + phi)
             Fff[2]    = -az
+
+            self._collect(state, x_current, sensors, Fff)
 
             self.system.set_target(self.device_name, {
                 "x":   x_ref,
@@ -170,7 +217,10 @@ class InsertionEpisode:
                 return Phase.INSERT
 
             t        += self.dt
-            time.sleep(self.dt)
+            self._tick()
+
+        self.fail_phase = self.phase
+        return Phase.FAILED
 
     def make_contact(self) -> Phase:
         cfg         = self.config.get("episode", {}).get("contact", {})
@@ -178,13 +228,10 @@ class InsertionEpisode:
         timeout     = cfg.get("timeout", 5.0)
         f_push      = cfg.get("f_push", 3.0)
         n_confirm   = cfg.get("n_confirm", 5)
-        t_start     = time.time()
+        max_steps   = int(timeout / self.dt)
         n_above     = 0
 
-        while True:
-            if time.time() - t_start > timeout:
-                return Phase.FAILED
-
+        for _ in range(max_steps):
             state   = self.system.get_state()[self.device_name]
             sensors = self.system.sim.get_sensor_data()
 
@@ -204,9 +251,14 @@ class InsertionEpisode:
                 self.xz0 = x_current.position[2]
                 return Phase.SEARCH
 
-            time.sleep(self.dt)
+            self._tick()
+
+        self.fail_phase = self.phase
+        return Phase.FAILED
 
     def system_ready(self) -> Phase:
+        if self.headless:
+            return Phase.APPROACH
         while not self.system.sim.running:
             time.sleep(0.1)
         return Phase.APPROACH
@@ -234,7 +286,7 @@ class InsertionEpisode:
         nom_pose.position[2] += cfg_app.get("pos_threshold") + self.peg_offset
 
         pert = cfg_app.get("pertubation")
-        p2, q2 = self._sample_pose(nom_pose=nom_pose, xy_std=pert["xy_std"], z_std=pert["z_std"], angle_std=pert["angle_std_deg"])
+        p2, q2 = self._sample_pose(nom_pose=nom_pose,pos_std=pert["pos_std"],angle_std=pert["angle_std"])
 
         hover_height = cfg_app.get("hover_height", 0.15)
         p_hover = np.array([p2[0], p2[1], p2[2] + hover_height])
@@ -245,7 +297,13 @@ class InsertionEpisode:
         sensors = self.system.sim.get_sensor_data()
         tip = sensors[f'{self.prefix}peg_tip_pos'].copy()
         err = np.linalg.norm(tip - p2)
-        return Phase.CONTACT if err < cfg_app.get("success_threshold") else Phase.FAILED
+
+        self.fail_phase = self.phase
+        if err < cfg_app.get("success_threshold"):
+            return Phase.CONTACT
+        else:
+            self.fail_phase = self.phase
+            return Phase.FAILED
 
     def _execute_segment(self, p_start, q_start, p_end, q_end, max_speed) -> None:
         self.trajectory.plan_with_speed(p_start, q_start, p_end, q_end, max_speed=max_speed)
@@ -257,19 +315,19 @@ class InsertionEpisode:
                 "x": target_pose,
                 "xd": np.concatenate([step["vel"], step["omega"]])
             })
-            time.sleep(self.dt)
+            self._tick()
 
-    def _sample_pose(self, nom_pose: Pose, xy_std: 0.0, z_std: 0.0, angle_std: 0.0):
-        nominal_pos = nom_pose.position
-        pos = nominal_pos + np.array([np.random.normal(0, xy_std), np.random.normal(0, xy_std), np.random.normal(0, z_std)])
+    def _sample_pose(self, nom_pose: Pose, pos_std, angle_std):
+        pos_std = np.array(pos_std)
+        angle_std = np.deg2rad(np.array(angle_std))
 
-        angle = np.random.normal(0, np.deg2rad(angle_std))
-        axis  = np.random.randn(3)
-        axis /= np.linalg.norm(axis)
-        delta_rot = Rotation.from_rotvec(axis * angle)
+        pos = nom_pose.position + np.random.normal(0, pos_std)
+
+        angles = np.random.normal(0, angle_std)
+        delta_rot = Rotation.from_euler('xyz', angles)
 
         nominal_quat = nom_pose.quaternion
-        nominal_rot  = Rotation.from_quat([nominal_quat[1], nominal_quat[2], nominal_quat[3], nominal_quat[0]])
+        nominal_rot = Rotation.from_quat([nominal_quat[1], nominal_quat[2], nominal_quat[3], nominal_quat[0]])
         perturbed_rot = delta_rot * nominal_rot
         quat_xyzw = perturbed_rot.as_quat()
         quat = np.array([quat_xyzw[3], quat_xyzw[0], quat_xyzw[1], quat_xyzw[2]])

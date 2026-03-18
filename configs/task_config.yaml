@@ -1,17 +1,18 @@
-T_task: 20.0
-
-N_task: 10
+N_task: 30
 peg_ee_offset: 0.08
-insert_depth: 0.02
+insert_depth: 0.06
+
+data_collector:
+  enabled: true
+  output_dir: obs/
 
 hole_pose:
   pos: [0.5, 0, 0.425]
   quat: [1.0, 0.0, 0.0, 0.0]
   height: 0.1
   pertubation:
-    xy_std: 0.006
-    z_std: 0.000
-    angle_std_deg: 0
+    pos_std: [0.0035, 0.0035, 0.0]
+    angle_std: [0.0, 0.0, 1.0]
 
 devices:
   arm:
@@ -25,35 +26,34 @@ episode:
     hover_height: 0.05
     speed_transit: 0.3
     speed_descent: 0.05
-    success_threshold: 0.05
+    success_threshold: 0.08
     pertubation:
-      xy_std: 0.010
-      z_std: 0.002
-      angle_std_deg: 2.0
+      pos_std: [0.00, 0.00, 0.002]
+      angle_std: [0.0, 0.0, 1.0]
 
   contact:
     force_threshold: 2.0
     f_push: 4.0
-    timeout: 5.0
-    n_confirm: 100
+    timeout: 7.0
+    n_confirm: 75
 
   search:
     hole_detection_threshold: 0.002
     timeout: 40
     wiggle:
-      a: [10.0, 10.0, 4.931, 0.766, 0.906, 3.228]
-      f:   [1.179, 1.561, 0.0,   0.718, 0.720, 0.143]
+      a: [7.0, 7.0, 4.931, 0.766, 0.906, 5.5]
+      f: [1.179, 1.561, 0.0, 0.718, 0.720, 0.4]
       phi: [-0.078, 0.776, 0.0, -1.562, 0.610, -0.119]
-      az:  2.5
+      az:  3.0
 
   insert:
-    timeout: 20.0
-    z_window: 1000
-    z_score_threshold: 3.0
+    timeout: 45.0
+    z_window: 350
+    z_score_threshold: 2.5
     velocity_drop_threshold: 0.001
     done_threshold: 0.001
     wiggle:
-      a:   [2.0, 2.0, 4.931, 0.766, 0.906, 3.228]
-      f:   [2.179, 1.561, 0.0, 0.718, 0.720, 0.143]
+      a: [2.0, 2.0, 4.931, 0.766, 0.906, 2.5]
+      f: [2.179, 1.561, 0.0, 0.718, 0.720, 0.25]
       phi: [-0.078, 0.776, 0.0, -1.562, 0.610, -0.119]
       az:  5

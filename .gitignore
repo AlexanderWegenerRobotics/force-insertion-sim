@@ -34,6 +34,7 @@ ENV/
 
 # Logs and data
 log/
+obs/
 logs/
 *.hdf5
 *.h5
