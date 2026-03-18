@@ -1,6 +1,6 @@
 # force-insertion-sim
 
-MuJoCo simulation environment for tight-clearance peg-in-hole insertion. Built on [SimCore](https://github.com/yourname/SimCore) for simulation and control infrastructure.
+MuJoCo simulation environment for tight-clearance peg-in-hole insertion. Built on [SimCore](https://github.com/AlexanderWegenerRobotics/SimCore) for simulation and control infrastructure.
 
 The system implements a multi-phase expert policy inspired by the wiggle-based insertion skill framework from [Wu et al., ICRA 2024](https://doi.org/10.1109/ICRA57147.2024.10610835) and collects demonstration data structured for training imitation learning policies.
 
