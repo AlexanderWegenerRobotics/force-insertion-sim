@@ -1,7 +1,8 @@
 import threading
-from simcore import RobotSystem, load_yaml
+from simcore import RobotSystem, load_yaml, Pose
 from utils.sensor_callback import SensorCallback
 from task.insertion_task import InsertionTask
+
 
 def main():
     config = load_yaml("configs/global_config.yaml")

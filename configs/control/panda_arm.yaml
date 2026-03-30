@@ -8,11 +8,11 @@ position:
 impedance:
   K_cart: [800, 800, 800, 80, 80, 80]
   D_cart: [80, 80, 80, 20, 20, 20]
-  K_null: 10
+  K_null: 0
   tau_max: [87, 87, 87, 87, 12, 12, 12]
 
 dynamic_impedance:
   K_cart: [350, 350, 700, 80, 80, 200]
   D_cart: [55, 55, 55, 10, 10, 20]
-  K_null: 5
+  K_null: 0
   tau_max: [87, 87, 87, 87, 12, 12, 12]
