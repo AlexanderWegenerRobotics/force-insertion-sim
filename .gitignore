@@ -46,7 +46,6 @@ logs/
 
 # MuJoCo
 *.mjb
-*.stl
 *.dae
 
 # Configs with secrets
