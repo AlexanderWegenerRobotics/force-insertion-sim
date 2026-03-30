@@ -54,7 +54,7 @@ devices:
   - name: arm
     type: robot
     enabled: True
-    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/franka_fr3/fr3_torque_peg.xml
+    model_path: models/mujoco/franka_fr3/fr3_torque_peg.xml
     urdf_path: assets/urdf/franka_fr3/panda.urdf
     urdf_ee_name: fr3_link8
     ctrl_param: configs/control/panda_arm.yaml
@@ -75,7 +75,7 @@ objects:
 
   - name: hole
     type: static
-    model_path: /Users/alex/Workspace/projects/force-insertion-sim/models/mujoco/props/holes/hole_rect_s_tight/fixture.xml
+    model_path: models/mujoco/props/holes/hole_rect_s_tight/fixture.xml
     pose:
       position: [0.5, 0, 0.425]
       orientation: [1, 0, 0, 0]
