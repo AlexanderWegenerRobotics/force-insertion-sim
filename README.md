@@ -53,7 +53,6 @@ cd SimCore && pip install -e . && cd ..
 # Install this project
 git clone https://github.com/yourname/force-insertion-sim.git
 cd force-insertion-sim
-pip install -r requirements.txt
 ```
 
 ---
