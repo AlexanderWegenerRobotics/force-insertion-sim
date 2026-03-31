@@ -1,10 +1,6 @@
 scene_config: configs/scene_config.yaml
 task_config: configs/task_config.yaml
+policy_config: configs/policy_config.yaml
 
 logging_path: log/
 trial_name: collection
-
-communication:
-  operator_ip: 127.0.0.1
-  listen_port: 5010
-  send_port: 6010

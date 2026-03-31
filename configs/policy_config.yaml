@@ -1,0 +1,9 @@
+policy: ddpm                          # ddpm | cvae
+weights: weights/final.pt
+hidden_dim: 1024
+diffusion_horizon: 50
+
+filter_alpha: 0.9
+filter_beta: 0.3
+
+norm_stats: weights/normalization_stats.yaml
