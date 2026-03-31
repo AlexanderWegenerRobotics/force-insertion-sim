@@ -216,7 +216,7 @@ class InsertionEpisode:
             if self.xz0 - x_current.position[2] > epsilon:
                 return Phase.INSERT
 
-            t        += self.dt
+            t += self.dt
             self._tick()
 
         self.fail_phase = self.phase

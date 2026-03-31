@@ -1,7 +1,9 @@
 import numpy as np
 from task.insertion_episode import InsertionEpisode, Phase
 from policy.dynamic_filter import DynamicFilter
-
+from simcore.common.pose import Pose
+from scipy.spatial.transform import Rotation
+import time
 
 class LearnedEpisode(InsertionEpisode):
     def __init__(self, system=None, config=None, policy=None, policy_cfg=None):
@@ -46,6 +48,17 @@ class LearnedEpisode(InsertionEpisode):
         timeout   = cfg.get("timeout", 30.0)
         max_steps = int(timeout / self.dt)
 
+        hole_quat     = self.hole_nom_pose.quaternion
+        approach_quat = np.array([0, 1, 0, 0])
+        R_hole        = Rotation.from_quat([hole_quat[1], hole_quat[2], hole_quat[3], hole_quat[0]])
+        R_approach    = Rotation.from_quat([approach_quat[1], approach_quat[2], approach_quat[3], approach_quat[0]])
+        q_xyzw        = (R_hole * R_approach).as_quat()
+        q_down        = np.array([q_xyzw[3], q_xyzw[0], q_xyzw[1], q_xyzw[2]])
+        x_ref = Pose(
+            position=np.array([self.hole_nom_pose.position[0], self.hole_nom_pose.position[1], self.xz0 - 0.02]),
+            quaternion=q_down
+        )
+
         state   = self.system.get_state()[self.device_name]
         sensors = self.system.sim.get_sensor_data()
         o_prev  = self._get_obs(state, sensors)
@@ -60,10 +73,11 @@ class LearnedEpisode(InsertionEpisode):
 
             o_curr = self._get_obs(state, sensors)
             F_df   = self.policy.predict(o_prev, o_curr)
-            Fff    = self.filter.step(F_df)
+            t0  = time.time()
+            Fff = self.filter.step(F_df, dt=time.time() - t0)
 
             self.system.set_target(self.device_name, {
-                "x":   x_current,
+                "x":   x_ref,
                 "xd":  np.zeros(6),
                 "xdd": np.zeros(6),
                 "Fff": Fff,

@@ -1,9 +1,9 @@
 world_model: assets/mujoco/scenes/world_scene.xml
 render_fps: 20
 
-headless: False
+headless: True
 display:
-  enabled: True
+  enabled: False
   # Options: horizontal, vertical, grid
   layout: grid
   grid_cols: 2

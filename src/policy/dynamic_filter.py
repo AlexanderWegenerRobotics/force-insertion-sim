@@ -12,8 +12,8 @@ class DynamicFilter:
         self.F_ff     = np.zeros(6)
         self.F_ff_dot = np.zeros(6)
 
-    def step(self, F_df: np.ndarray) -> np.ndarray:
+    def step(self, F_df: np.ndarray, dt: float) -> np.ndarray:
         F_ff_ddot  = self.alpha * (self.beta * (F_df - self.F_ff) - self.F_ff_dot)
-        self.F_ff_dot += F_ff_ddot * self.dt
-        self.F_ff     += self.F_ff_dot * self.dt
+        self.F_ff_dot += F_ff_ddot * dt
+        self.F_ff     += self.F_ff_dot * dt
         return self.F_ff.copy()
