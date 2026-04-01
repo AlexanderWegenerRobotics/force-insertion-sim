@@ -55,7 +55,6 @@ local_config.yaml
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb
 
 # Distribution
 *.tar.gz
