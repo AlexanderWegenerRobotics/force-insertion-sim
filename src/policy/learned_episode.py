@@ -72,7 +72,10 @@ class LearnedEpisode(InsertionEpisode):
                 return Phase.DONE
 
             o_curr = self._get_obs(state, sensors)
+            start_time = time.time()
             F_df   = self.policy.predict(o_prev, o_curr)
+            delta_t = time.time() - start_time
+            print(f"Incerence time: {delta_t:.4f}, frequency: {(1.0/delta_t):.2f}")
             t0  = time.time()
             Fff = self.filter.step(F_df, dt=time.time() - t0)
 
@@ -80,7 +83,7 @@ class LearnedEpisode(InsertionEpisode):
                 "x":   x_ref,
                 "xd":  np.zeros(6),
                 "xdd": np.zeros(6),
-                "Fff": Fff,
+                "Fff": F_df,
             })
 
             o_prev = o_curr

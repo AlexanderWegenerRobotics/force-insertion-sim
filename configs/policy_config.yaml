@@ -1,6 +1,6 @@
 policy: ddpm                          # ddpm | cvae
-weights: weights/final.pt
-hidden_dim: 1024
+weights: weights/df3/best.pt
+hidden_dim: 512
 diffusion_horizon: 50
 
 filter_alpha: 0.9
