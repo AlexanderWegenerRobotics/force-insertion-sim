@@ -37,7 +37,7 @@ render_cameras:
 
 # Logging configuration
 logging:
-  enabled: True
+  enabled: False
   frequency: 200
 
 video_logging:

@@ -68,15 +68,15 @@ class InsertionTask:
                 "hole_quat": hole_quat.tolist(),
                 "fail_phase": fail_phase,
             }
-            self._log_episode_result(result)
+            self._log_episode_result(result, wall_duration)
         
         print(f"Finished {self.N_rep} in {(time.time() - task_start_time):.3f}s. Success ratio is {(success_cnt / self.N_rep)*100}%")
 
         self.system.stop()
 
-    def _log_episode_result(self, result: dict) -> None:
+    def _log_episode_result(self, result: dict, wall_duration: float) -> None:
         status = "SUCCESS" if result["success"] else f"FAILED ({result['fail_phase']})"
-        print(f"Episode {(result['episode']+1):03d} | {status} | duration: {result['duration']:.2f}s | hole_pos: {np.round(result['hole_pos'], 3)} | hole_quat: {np.round(result['hole_quat'], 3)}")
+        print(f"Episode {(result['episode']+1):03d} | {status} | duration: {result['duration']:.2f}s | wall duration: {wall_duration:.2f} | hole_pos: {np.round(result['hole_pos'], 3)} | hole_quat: {np.round(result['hole_quat'], 3)}")
 
 if __name__ == "__main__":
     config = load_yaml("configs/global_config.yaml")
