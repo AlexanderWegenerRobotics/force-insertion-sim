@@ -39,7 +39,7 @@ class InsertionTask:
             self.episode.run()
 
             wall_duration = time.time() - start_time
-            sim_duration = self.episode._sim_time  # reset() zeros this, so it's already the episode duration
+            sim_duration = self.episode._sim_time
 
             duration = sim_duration if self.headless else wall_duration
 
@@ -48,6 +48,9 @@ class InsertionTask:
 
             if success:
                 success_cnt += 1
+
+            if (n + 1) % 50 == 0:
+                print(f"[{n+1}/{self.N_rep}] Success rate: {(success_cnt / (n+1)) * 100:.1f}%")
 
             self.collector.finish_episode(
                 success=success,

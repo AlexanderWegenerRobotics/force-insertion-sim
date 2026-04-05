@@ -40,7 +40,7 @@ class InsertionEpisode:
         self.hole_nom_pose = Pose(position=hole_cfg.get("pos"), quaternion=hole_cfg.get("quat"))
         self.hole_nom_pose.position[2] += hole_cfg.get("height")
         self.insertion_success_z = self.hole_nom_pose.position[2] - self.config.get("insert_depth")
-        self.dt = self.system.get_timestep()
+        self.dt = self.system.get_control_cycle()
 
         # Episode sim-time counter, reset each episode
         self._sim_time = 0.0
@@ -53,7 +53,7 @@ class InsertionEpisode:
             time.sleep(self.dt)
         self._sim_time += self.dt
 
-    def reset(self, hole_pos: np.ndarray, hole_quat: np.ndarray) -> None:
+    def reset(self, hole_pos, hole_quat):
         self.system.sim.reset_device_state("arm", self.q_init)
         self.system.sim.reset_object_pose("hole", hole_pos, hole_quat)
         self.system.set_controller_mode("arm", "dynamic_impedance")
@@ -61,6 +61,9 @@ class InsertionEpisode:
         self.fail_phase = Phase.UNDEFINED
         self.running = True
         self._sim_time = 0.0
+        # reset filter state so episode boundary doesn't bleed
+        if hasattr(self.system, 'sensor_cb'):
+            self.system.sensor_cb.reset()
 
     def run(self):
         while self.running:
@@ -89,17 +92,8 @@ class InsertionEpisode:
         f_internal = self.system.ctrl[self.device_name].get_internal_wrench(q, qd, tau)
         ee_vel     = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(q, qd)
         peg_tip    = sensors.get(f'{self.prefix}peg_tip_pos', np.zeros(3))
-        self.collector.record(
-            f_ext       = f_ext,
-            f_internal  = f_internal,
-            ee_velocity = ee_vel,
-            Fff         = Fff,
-            peg_tip_pos = peg_tip,
-            ee_pose     = x_current.as_7d(),
-            mode        = 1,
-            q           = q,
-            sim_time    = self._sim_time,
-        )
+        self.collector.record(f_ext=f_ext, f_internal=f_internal, ee_velocity=ee_vel, Fff=Fff, peg_tip_pos=peg_tip, 
+                              ee_pose=x_current.as_7d(), mode=1, q=q, sim_time=self._sim_time)
 
     def run_insert(self) -> Phase:
         cfg     = self.config.get("episode", {}).get("insert", {})
@@ -166,7 +160,7 @@ class InsertionEpisode:
             })
 
             fres_z_prev = f_res_z
-            t          += self.dt
+            t += self.dt
             self._tick()
         
         self.fail_phase = self.phase

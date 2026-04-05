@@ -137,9 +137,10 @@ def _generate_xml(
         geom_lines.append(
             f'      <geom name="{stem}_col_{i}" type="mesh" mesh="{stem}_col_{i}"\n'
             f'            rgba="0.4 0.4 0.8 0.0"\n'
-            f'            friction="0.2 0.005 0.0001"\n'
-            f'            solref="0.02 1"\n'
-            f'            solimp="0.9 0.95 0.001"/>'
+            f'            friction="0.3 0.005 0.0001"\n'
+            f'            condim="4"\n'
+            f'            solref="0.005 1"\n'
+            f'            solimp="0.95 0.999 0.002"\n/>'
         )
     geoms = "\n".join(geom_lines)
 

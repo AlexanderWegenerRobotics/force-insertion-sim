@@ -26,7 +26,7 @@ episode:
     hover_height: 0.05
     speed_transit: 0.3
     speed_descent: 0.05
-    success_threshold: 0.08
+    success_threshold: 0.1
     pertubation:
       pos_std: [0.002, 0.002, 0.002]  # 0.002
       angle_std: [0.0, 0.0, 1.0]
