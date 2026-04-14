@@ -42,7 +42,6 @@ class InsertionEpisode:
         self.insertion_success_z = self.hole_nom_pose.position[2] - self.config.get("insert_depth")
         self.dt = self.system.get_control_cycle()
 
-        # Episode sim-time counter, reset each episode
         self._sim_time = 0.0
 
     def _tick(self):
@@ -61,7 +60,8 @@ class InsertionEpisode:
         self.fail_phase = Phase.UNDEFINED
         self.running = True
         self._sim_time = 0.0
-        # reset filter state so episode boundary doesn't bleed
+        self._wiggle_t = 0.0
+        self._last_Fff = np.zeros(6)
         if hasattr(self.system, 'sensor_cb'):
             self.system.sensor_cb.reset()
 
@@ -82,18 +82,22 @@ class InsertionEpisode:
             if self.phase in (Phase.FAILED, Phase.DONE):
                 self.running = False
 
-    def _collect(self, state, x_current, sensors, Fff):
+    def _collect(self, state, x_current, Fff):
         if self.collector is None:
             return
         q, qd, tau = state.q, state.qd, state.tau
+
+        self.system.sensor_cb(self.system.sim.mj_model, self.system.sim.mj_data)
+        sensors = self.system.sensor_cb.latest['sensors']
+
         f_ext = np.zeros(6)
-        f_ext[:3]      = sensors.get(f'{self.prefix}ft_force', np.zeros(3))
-        f_ext[3:]      = sensors.get(f'{self.prefix}ft_torque', np.zeros(3))
+        f_ext[:3] = sensors['ft_force']
+        f_ext[3:] = sensors['ft_torque']
         f_internal = self.system.ctrl[self.device_name].get_internal_wrench(q, qd, tau)
-        ee_vel     = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(q, qd)
-        peg_tip    = sensors.get(f'{self.prefix}peg_tip_pos', np.zeros(3))
-        self.collector.record(f_ext=f_ext, f_internal=f_internal, ee_velocity=ee_vel, Fff=Fff, peg_tip_pos=peg_tip, 
-                              ee_pose=x_current.as_7d(), mode=1, q=q, sim_time=self._sim_time)
+        ee_vel = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(q, qd)
+        peg_tip = sensors['peg_tip_pos']
+        self.collector.record(f_ext=f_ext, f_internal=f_internal, ee_velocity=ee_vel, Fff=Fff,
+                            peg_tip_pos=peg_tip, ee_pose=x_current.as_7d(), mode=1, q=q, sim_time=self._sim_time)
 
     def run_insert(self) -> Phase:
         cfg     = self.config.get("episode", {}).get("insert", {})
@@ -104,15 +108,26 @@ class InsertionEpisode:
         z_window, z_score_thresh = cfg.get("z_window"), cfg.get("z_score_threshold")
         v_drop_thresh, done_thresh = cfg.get("velocity_drop_threshold"), cfg.get("done_threshold")
 
+        n_confirm_unstuck = cfg.get("n_confirm_unstuck", 5)
+        n_confirm_aligned = cfg.get("n_confirm_aligned", 10)
+        n_confirm_stuck   = cfg.get("n_confirm_stuck", 5)
+        speed_filter_len  = cfg.get("speed_filter_window", 10)
+        ramp_steps        = cfg.get("ramp_steps", 50)
+        blend_rate        = 1.0 / max(ramp_steps, 1)
+
         state = self.system.get_state()[self.device_name]
 
         z_buf        = deque(maxlen=z_window)
+        speed_buf    = deque(maxlen=speed_filter_len)
         fres_z_prev  = 0.0
         insert_state = "STUCK"
+        pending      = None
+        confirm_cnt  = 0
+        blend        = 0.0
+        phase_ramp   = 0
         max_steps    = int(timeout / self.dt)
-        t            = 0.0
 
-        for _ in range(max_steps):
+        for step_i in range(max_steps):
             state     = self.system.get_state()[self.device_name]
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
             sensors   = self.system.sim.get_sensor_data()
@@ -126,31 +141,88 @@ class InsertionEpisode:
             z_score = abs((z_arr[-1] - z_arr.mean()) / (z_arr.std() + 1e-9)) if len(z_buf) > 10 else 0.0
 
             xd = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(state.q, state.qd)
-            speed = np.linalg.norm(xd[:3])
+            speed_buf.append(np.linalg.norm(xd[:3]))
+            speed = np.mean(speed_buf)
 
             if x_current.position[2] - self.peg_offset < self.insertion_success_z:
                 return Phase.DONE
 
+            Fff_wiggle    = a * np.sin(2 * np.pi * f * self._wiggle_t + phi)
+            Fff_wiggle[2] = -az
+
+            if phase_ramp < ramp_steps:
+                alpha = phase_ramp / ramp_steps
+                Fff_wiggle = (1.0 - alpha) * self._last_Fff + alpha * Fff_wiggle
+                phase_ramp += 1
+
+            Fff_push      = np.array([0.0, 0.0, -az, 0.0, 0.0, 0.0])
+
             if insert_state == "STUCK":
-                Fff      = a * np.sin(2 * np.pi * f * t + phi)
-                Fff[2]   = -az
                 if z_score > z_score_thresh:
+                    if pending == "UNSTUCK":
+                        confirm_cnt += 1
+                    else:
+                        pending = "UNSTUCK"
+                        confirm_cnt = 1
+                else:
+                    pending = None
+                    confirm_cnt = 0
+
+                if confirm_cnt >= n_confirm_unstuck:
                     insert_state = "UNSTUCK"
+                    pending = None
+                    confirm_cnt = 0
 
             elif insert_state == "UNSTUCK":
-                Fff      = a * np.sin(2 * np.pi * f * t + phi)
-                Fff[2]   = -az
                 if fres_z_prev < f_res_z and speed < v_drop_thresh:
-                    insert_state = "ALIGNED"
+                    if pending == "ALIGNED":
+                        confirm_cnt += 1
+                    else:
+                        pending = "ALIGNED"
+                        confirm_cnt = 1
                 elif speed < v_drop_thresh:
+                    if pending == "STUCK":
+                        confirm_cnt += 1
+                    else:
+                        pending = "STUCK"
+                        confirm_cnt = 1
+                else:
+                    pending = None
+                    confirm_cnt = 0
+
+                if pending == "ALIGNED" and confirm_cnt >= n_confirm_aligned:
+                    insert_state = "ALIGNED"
+                    pending = None
+                    confirm_cnt = 0
+                elif pending == "STUCK" and confirm_cnt >= n_confirm_stuck:
                     insert_state = "STUCK"
+                    pending = None
+                    confirm_cnt = 0
 
             elif insert_state == "ALIGNED":
-                Fff = np.array([0.0, 0.0, -az, 0.0, 0.0, 0.0])
                 if speed < v_drop_thresh:
-                    insert_state = "STUCK"
+                    if pending == "STUCK":
+                        confirm_cnt += 1
+                    else:
+                        pending = "STUCK"
+                        confirm_cnt = 1
+                else:
+                    pending = None
+                    confirm_cnt = 0
 
-            self._collect(state, x_current, sensors, Fff)
+                if confirm_cnt >= n_confirm_stuck:
+                    insert_state = "STUCK"
+                    pending = None
+                    confirm_cnt = 0
+
+            if insert_state == "ALIGNED":
+                blend = min(blend + blend_rate, 1.0)
+            else:
+                blend = max(blend - blend_rate, 0.0)
+
+            Fff = (1.0 - blend) * Fff_wiggle + blend * Fff_push
+
+            self._collect(state, x_current, Fff)
 
             self.system.set_target(self.device_name, {
                 "x":   x_current,
@@ -160,7 +232,7 @@ class InsertionEpisode:
             })
 
             fres_z_prev = f_res_z
-            t += self.dt
+            self._wiggle_t += self.dt
             self._tick()
         
         self.fail_phase = self.phase
@@ -170,7 +242,6 @@ class InsertionEpisode:
         cfg      = self.config.get("episode", {}).get("search", {})
         epsilon, timeout  = cfg.get("hole_detection_threshold"), cfg.get("timeout", 15.0)
         max_steps = int(timeout / self.dt)
-        t         = 0.0
 
         wig      = cfg.get("wiggle", {})
         a, f, phi, az = np.array(wig.get("a")), np.array(wig.get("f")), np.array(wig.get("phi")), wig.get("az")
@@ -195,10 +266,11 @@ class InsertionEpisode:
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
             sensors   = self.system.sim.get_sensor_data()
 
-            Fff       = a * np.sin(2 * np.pi * f * t + phi)
+            Fff       = a * np.sin(2 * np.pi * f * self._wiggle_t + phi)
             Fff[2]    = -az
+            self._last_Fff = Fff.copy()
 
-            self._collect(state, x_current, sensors, Fff)
+            self._collect(state, x_current, Fff)
 
             self.system.set_target(self.device_name, {
                 "x":   x_ref,
@@ -210,7 +282,7 @@ class InsertionEpisode:
             if self.xz0 - x_current.position[2] > epsilon:
                 return Phase.INSERT
 
-            t += self.dt
+            self._wiggle_t += self.dt
             self._tick()
 
         self.fail_phase = self.phase

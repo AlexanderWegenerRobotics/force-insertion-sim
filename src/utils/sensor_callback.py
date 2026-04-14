@@ -66,6 +66,7 @@ class SensorCallback:
         self.gravity_compensation = gravity_compensation
         self.ee_mass = ee_mass
         self.filter_type = filter_type
+        self.latest = None
 
         if base_orientation is not None:
             quat_wxyz = base_orientation
@@ -112,7 +113,7 @@ class SensorCallback:
             ft_force = self._force_filter(ft_force)
             ft_torque = self._torque_filter(ft_torque)
 
-        return {
+        result = {
             'sensors': {
                 'ft_force':    ft_force,
                 'ft_torque':   ft_torque,
@@ -121,3 +122,5 @@ class SensorCallback:
                 'peg_tip_pos': mj_data.sensor(f'{p}peg_tip_pos').data.copy(),
             }
         }
+        self.latest = result
+        return result
