@@ -36,9 +36,18 @@ class LearnedEpisode(InsertionEpisode):
 
     def _get_obs(self, state, sensors) -> np.ndarray:
         q, qd, tau = state.q, state.qd, state.tau
-        f_ext      = np.zeros(6)
-        f_ext[:3]  = sensors.get(f'{self.prefix}ft_force', np.zeros(3))
-        f_ext[3:]  = sensors.get(f'{self.prefix}ft_torque', np.zeros(3))
+
+        # Use filtered sensor data from sensor_cb, not raw sim sensors
+        if hasattr(self.system, 'sensor_cb') and self.system.sensor_cb.latest is not None:
+            filtered = self.system.sensor_cb.latest['sensors']
+            f_ext = np.zeros(6)
+            f_ext[:3] = filtered['ft_force']
+            f_ext[3:] = filtered['ft_torque']
+        else:
+            f_ext = np.zeros(6)
+            f_ext[:3] = sensors.get(f'{self.prefix}ft_force', np.zeros(3))
+            f_ext[3:] = sensors.get(f'{self.prefix}ft_torque', np.zeros(3))
+
         f_internal = self.system.ctrl[self.device_name].get_internal_wrench(q, qd, tau)
         ee_vel     = self.system.ctrl[self.device_name].kin_model.get_ee_velocity(q, qd)
         return np.concatenate([f_ext, f_internal, ee_vel]).astype(np.float32)
@@ -63,6 +72,9 @@ class LearnedEpisode(InsertionEpisode):
         sensors = self.system.sim.get_sensor_data()
         o_prev  = self._get_obs(state, sensors)
 
+        x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
+        print(f"Ref position: {x_ref.position}, current position: {x_current.position}")
+
         for _ in range(max_steps):
             state     = self.system.get_state()[self.device_name]
             x_current = self.system.ctrl[self.device_name].get_ee_pose_world(state)
@@ -75,7 +87,7 @@ class LearnedEpisode(InsertionEpisode):
             start_time = time.time()
             F_df   = self.policy.predict(o_prev, o_curr)
             delta_t = time.time() - start_time
-            print(f"Incerence time: {delta_t:.4f}, frequency: {(1.0/delta_t):.2f}")
+            #print(f"Incerence time: {delta_t:.4f}, frequency: {(1.0/delta_t):.2f}")
             t0  = time.time()
             Fff = self.filter.step(F_df, dt=time.time() - t0)
 

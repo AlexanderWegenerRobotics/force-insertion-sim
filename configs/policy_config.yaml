@@ -1,9 +1,12 @@
 policy: ddpm                          # ddpm | cvae
-weights: weights/df3/best.pt
+weights: weights/tacDiffusionBase/df3/best.pt
 hidden_dim: 512
 diffusion_horizon: 50
 
 filter_alpha: 0.9
 filter_beta: 0.3
 
-norm_stats: weights/normalization_stats.yaml
+norm_stats: weights/tacDiffusionBase/normalization_stats.yaml
+
+use_onnx: true
+onnx_weights: weights/tacDiffusionBase/df3/noise_estimator.onnx

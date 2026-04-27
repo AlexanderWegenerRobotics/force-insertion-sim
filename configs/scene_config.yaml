@@ -2,7 +2,7 @@ world_model: assets/mujoco/scenes/world_scene.xml
 render_fps: 20
 control_rate: 200
 
-headless: True
+headless: False
 display:
   enabled: True
   # Options: horizontal, vertical, grid
@@ -37,7 +37,7 @@ render_cameras:
 
 # Logging configuration
 logging:
-  enabled: False
+  enabled: True
   frequency: 200
 
 video_logging:

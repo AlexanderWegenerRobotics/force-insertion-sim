@@ -11,7 +11,7 @@ def main():
     config = load_yaml("configs/global_config.yaml")
     system = RobotSystem(config)
 
-    sensor_cb = SensorCallback(device_name="arm", gravity_compensation=True, ee_mass=0.15)
+    sensor_cb = SensorCallback(device_name="arm", gravity_compensation=True, ee_mass=0.15, filter_type="butterworth", cutoff_hz=10.0, fs_hz=200.0, butter_order=3)
     system.sim.register_log_callback(sensor_cb)
 
     task_cfg = load_yaml(config.get("task_config"))

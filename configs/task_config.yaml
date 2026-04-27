@@ -3,7 +3,7 @@ peg_ee_offset: 0.08
 insert_depth: 0.06
 
 data_collector:
-  enabled: true
+  enabled: false
   output_dir: obs/
 
 hole_pose:
@@ -11,8 +11,8 @@ hole_pose:
   quat: [1.0, 0.0, 0.0, 0.0]
   height: 0.1
   pertubation:
-    pos_std: [0.0035, 0.0035, 0.0]    # 0.0035
-    angle_std: [0.0, 0.0, 1.0]
+    pos_std: [0.00, 0.00, 0.0]    # 0.0035
+    angle_std: [0.0, 0.0, 0.0]    # 1.0
 
 devices:
   arm:
@@ -28,8 +28,8 @@ episode:
     speed_descent: 0.05
     success_threshold: 0.1
     pertubation:
-      pos_std: [0.002, 0.002, 0.002]  # 0.002
-      angle_std: [0.0, 0.0, 1.0]
+      pos_std: [0.00, 0.00, 0.00]  # 0.002
+      angle_std: [0.0, 0.0, 0.0]
 
   contact:
     force_threshold: 2.0

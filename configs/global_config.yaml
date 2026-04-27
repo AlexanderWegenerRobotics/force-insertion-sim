@@ -3,4 +3,4 @@ task_config: configs/task_config.yaml
 policy_config: configs/policy_config.yaml
 
 logging_path: log/
-trial_name: collection
+trial_name: deployment
