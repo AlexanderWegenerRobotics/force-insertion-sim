@@ -87,7 +87,7 @@ class LearnedEpisode(InsertionEpisode):
             start_time = time.time()
             F_df   = self.policy.predict(o_prev, o_curr)
             delta_t = time.time() - start_time
-            #print(f"Incerence time: {delta_t:.4f}, frequency: {(1.0/delta_t):.2f}")
+            print(f"Incerence time: {delta_t:.4f}, frequency: {(1.0/delta_t):.2f}")
             t0  = time.time()
             Fff = self.filter.step(F_df, dt=time.time() - t0)
 

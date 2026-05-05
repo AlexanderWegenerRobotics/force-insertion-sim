@@ -1,6 +1,6 @@
 policy: ddpm                          # ddpm | cvae
-weights: weights/tacDiffusionBase/df3/best.pt
-hidden_dim: 512
+weights: weights/tacDiffusionBase/df1/df1_best.pt
+hidden_dim: 128
 diffusion_horizon: 50
 
 filter_alpha: 0.9
