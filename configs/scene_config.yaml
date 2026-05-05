@@ -46,6 +46,8 @@ video_logging:
   cameras:
     - workspace_overview_1
     - workspace_overview_2
+    - workspace_overview_3
+    - workspace_overview_4
 
 streaming:
   enabled: False

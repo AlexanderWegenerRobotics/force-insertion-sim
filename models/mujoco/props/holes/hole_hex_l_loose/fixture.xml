@@ -67,7 +67,7 @@
   <worldbody>
     <body name="fixture" pos="0 0 0">
       <geom name="hole_hex_l_loose_visual" type="mesh" mesh="hole_hex_l_loose_visual"
-            contype="0" conaffinity="0"
+            contype="1" conaffinity="1"
             rgba="0.4 0.4 0.8 1.0"/>
       <geom name="hole_hex_l_loose_col_0" type="mesh" mesh="hole_hex_l_loose_col_0"
             rgba="0.4 0.4 0.8 0.0"

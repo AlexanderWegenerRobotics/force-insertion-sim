@@ -3,7 +3,7 @@ peg_ee_offset: 0.08
 insert_depth: 0.06
 
 data_collector:
-  enabled: false
+  enabled: true
   output_dir: obs/
 
 hole_pose:
@@ -11,7 +11,7 @@ hole_pose:
   quat: [1.0, 0.0, 0.0, 0.0]
   height: 0.1
   pertubation:
-    pos_std: [0.00, 0.00, 0.0]    # 0.0035
+    pos_std: [0.00, 0.00, 0.00]    # 0.0035
     angle_std: [0.0, 0.0, 0.0]    # 1.0
 
 devices:
